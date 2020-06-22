@@ -69,7 +69,7 @@ def check_on_netflix(title):
 
 
         for check in check:
-            # if (title < check.text) or (title == check.text):
+            if (title == check.text):
 
                 print("FOUND")
                 # found = True
@@ -87,6 +87,17 @@ def check_on_netflix(title):
                     print("Error occurred setting URL to placeholder '/#' ")
                     Pmovie_netflix_url.append(check.get("/#"))
                 return found
+
+        response = requests.get(check[0].get("href"))
+        data = response.text
+
+        soup = BeautifulSoup(data, features="lxml")
+        check = soup.find('a', {'id': 'Netflix'})
+
+        print("URL = " + check.get("href"))
+        Pmovie_netflix_url.append(check.get("href"))
+
+
 
 print("NOT FOUND")
 return found
