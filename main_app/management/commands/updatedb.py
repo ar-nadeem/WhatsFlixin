@@ -152,7 +152,7 @@ def updatedb_popmovies():
             rating = (rating.text.strip()) + "/10"
 
         else:
-            rating = "NOT YET RELEASED"
+            rating = "N/A"
         Pmovie_ratings.append(rating)
 
         image = soup.find('div', {'class': 'poster'})
@@ -221,7 +221,7 @@ def updatedb_topmovies():
             rating = (rating.text.strip()) + "/10"
 
         else:
-            rating = "NOT YET RELEASED"
+            rating = "N/A"
         Pmovie_ratings.append(rating)
 
         image = soup.find('div', {'class': 'poster'})
