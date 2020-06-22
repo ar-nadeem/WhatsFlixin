@@ -1,0 +1,1 @@
+web: gunicorn whatsflixinProject.wsgi --log-file -
