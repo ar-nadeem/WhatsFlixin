@@ -64,7 +64,7 @@ def check_on_netflix(title):
     soup = BeautifulSoup(data, features="lxml")
     check = soup.find_all('a',{'class':'_blank cvplbd'})
 
-    if len(check) >= 1 and len(check) < 3:
+    if len(check) >= 1:
         found = True
 
 
@@ -88,8 +88,8 @@ def check_on_netflix(title):
                     Pmovie_netflix_url.append(check.get("/#"))
                 return found
 
-    print("NOT FOUND")
-    return found
+print("NOT FOUND")
+return found
 
 def updatedb_popmovies():
     print("Updating DB for Popular Movies")
