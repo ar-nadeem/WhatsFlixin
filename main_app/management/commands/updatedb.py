@@ -64,30 +64,29 @@ def check_on_netflix(title):
     soup = BeautifulSoup(data, features="lxml")
     check = soup.find_all('a',{'class':'_blank cvplbd'})
 
-    # if len(check) == 1:
-    #     found = True
+    if len(check) >= 1 and len(check) < 3:
+        found = True
 
 
-    for check in check:
+        for check in check:
+            # if (title < check.text) or (title == check.text):
 
-        if (title > check.text) or (title == check.text):
+                print("FOUND")
+                # found = True
+                print("Fetching Netflix Streaming URL for that title !")
+                try:
+                    response = requests.get(check.get("href"))
+                    data = response.text
 
-            print("FOUND")
-            found = True
-            print("Fetching Netflix Streaming URL for that title !")
-            try:
-                response = requests.get(check.get("href"))
-                data = response.text
+                    soup = BeautifulSoup(data, features="lxml")
+                    check = soup.find('a', {'id': 'Netflix'})
 
-                soup = BeautifulSoup(data, features="lxml")
-                check = soup.find('a', {'id': 'Netflix'})
-
-                print("URL = "+check.get("href"))
-                Pmovie_netflix_url.append(check.get("href"))
-            except:
-                print("Error occurred setting URL to placeholder '/#' ")
-                Pmovie_netflix_url.append(check.get("/#"))
-            return found
+                    print("URL = "+check.get("href"))
+                    Pmovie_netflix_url.append(check.get("href"))
+                except:
+                    print("Error occurred setting URL to placeholder '/#' ")
+                    Pmovie_netflix_url.append(check.get("/#"))
+                return found
 
     print("NOT FOUND")
     return found
