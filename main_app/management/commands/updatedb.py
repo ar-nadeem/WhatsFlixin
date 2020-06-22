@@ -99,8 +99,8 @@ def check_on_netflix(title):
 
 
 
-print("NOT FOUND")
-return found
+    print("NOT FOUND")
+    return found
 
 def updatedb_popmovies():
     print("Updating DB for Popular Movies")
