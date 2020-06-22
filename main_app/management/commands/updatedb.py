@@ -67,11 +67,11 @@ def check_on_netflix(title):
     if len(check) >= 1:
         found = True
 
-
         for check in check:
+
             if (title == check.text):
 
-                print("FOUND")
+                print("FOUND Perfectly")
                 # found = True
                 print("Fetching Netflix Streaming URL for that title !")
                 try:
@@ -88,14 +88,18 @@ def check_on_netflix(title):
                     Pmovie_netflix_url.append(check.get("/#"))
                 return found
 
-        response = requests.get(check[0].get("href"))
-        data = response.text
+        check = soup.find_all('a', {'class': '_blank cvplbd'})
+        for check in check:
+            print("FOUND using method 2")
+            response = requests.get(check.get("href"))
+            data = response.text
 
-        soup = BeautifulSoup(data, features="lxml")
-        check = soup.find('a', {'id': 'Netflix'})
+            soup = BeautifulSoup(data, features="lxml")
+            check = soup.find('a', {'id': 'Netflix'})
 
-        print("URL = " + check.get("href"))
-        Pmovie_netflix_url.append(check.get("href"))
+            print("URL = " + check.get("href"))
+            Pmovie_netflix_url.append(check.get("href"))
+            return found
 
 
 
