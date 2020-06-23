@@ -3,35 +3,30 @@ from django.shortcuts import render
 from .models import PopularMovie, TopMovie
 
 
-
 # Create your views here.
 
 
-def PopView(request):
+def imdbPopMovieView(request):
 
-
-    data = PopularMovie.objects.all()
-    print(data)
+    imdb_Pop_Movie_DB = PopularMovie.objects.all()
+    print(imdb_Pop_Movie_DB)
 
     stuff_for_frontend = {
-        'Pmovie_post': data,
+        'imdb_Pop_Movies': imdb_Pop_Movie_DB,
 
         'nbar': 'popular',
     }
 
-
     return render(request, 'popmovies.html', stuff_for_frontend)
 
 
+def imdbTopMovieView(request):
 
-
-
-def TopView(request):
-    data = TopMovie.objects.all()
-    print(data)
+    imdb_Top_Movie_DB = TopMovie.objects.all()
+    print(imdb_Top_Movie_DB)
 
     stuff_for_frontend = {
-        'Tmovie_post': data,
+        'imdb_Top_Movies': imdb_Top_Movie_DB,
 
         'nbar': 'top-rated',
     }

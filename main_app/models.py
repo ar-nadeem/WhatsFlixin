@@ -1,7 +1,9 @@
 from django.db import models
 
+
 # Create your models here.
 class PopularMovie(models.Model):
+
     poster_link = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
@@ -14,6 +16,7 @@ class PopularMovie(models.Model):
 
     class Meta:
         verbose_name_plural = 'PopularMovies'
+
 
 class TopMovie(models.Model):
     poster_link = models.CharField(max_length=500)

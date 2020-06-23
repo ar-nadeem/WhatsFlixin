@@ -2,7 +2,7 @@
 
     {% block content %}
         {% load static %}
-        {% for post in Tmovie_post %}
+        {% for movie in imdb_Top_Movies %}
                 <!-- Main Grid to Display Movies-->
                 <div class="container  text-white mb-2 border border-dark rounded-lg  " style="background:transparent;border-width:3px !important" >
 
@@ -15,7 +15,7 @@
                                 <span class="badge badge-pill "style="background:rgba(68,255,0,0.5)">
 
 
-                                {{ post.rank }}
+                                {{ movie.rank }}
 
                                 </span>
                             </h1>
@@ -24,7 +24,7 @@
                         <!-- Poster Thumbnail Column -->
                         <div class="col-sm-2 Image ">
 
-                            <img src="{{ post.poster_link}}" alt="{{ post.title }}" class="img-thumbnail">
+                            <img src="{{ movie.poster_link}}" alt="{{ movie.title }}" class="img-thumbnail">
                         </div>
 
                         <!-- Title & Description Column-->
@@ -33,7 +33,7 @@
                             <!-- Title -->
                             <span class="badge text-white mt-3 ml-auto" style="background:rgba(255,0,0,0.5)">
                                 <h3 class="text-center">
-                                {{ post.title }}
+                                {{ movie.title }}
                                 </h3>
                             </span>
 
@@ -42,7 +42,7 @@
                             <!-- Description-->
                             <span>
                                 <p1>
-                                    {{ post.description}}
+                                    {{ movie.description}}
                                 </p1>
                             </span>
                         </div>
@@ -55,13 +55,13 @@
                             <!-- IMDB Rating-->
                             <h6 class="mt-3">
                                 <span class="badge-pill badge-secondary badge-warning">
-                                {{ post.rating}}
+                                {{ movie.rating}}
                                 </span>
                             </h6>
 
                             <!-- Watch on Netlfix button-->
                             <span>
-                                <a href="{{ post.netflix_url}}"  target="_blank" class="btn text-white active" role="button" style="background: #a00911">
+                                <a href="{{ movie.netflix_url}}"  target="_blank" class="btn text-white active" role="button" style="background: #a00911">
                                     Watch on Netflix
                                 </a>
                             </span>
