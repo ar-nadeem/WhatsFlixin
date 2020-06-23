@@ -164,8 +164,8 @@ def updatedb_popmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 5:
-            break
+        # if movie_rank > 5:
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -175,7 +175,7 @@ def updatedb_popmovies():
                              movie_urls[x]))
         imdbPopularMovie.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                         description=movie_descs[x],
-                                        rank=x + 1, rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x])
+                                        rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x])
     print("DB UPDATED")
 
 
@@ -241,8 +241,8 @@ def updatedb_topmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 5:
-            break
+        # if movie_rank > 5:
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
