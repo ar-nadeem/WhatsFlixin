@@ -8,6 +8,7 @@ imdb_pop_url = "https://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm"
 top_movie_url = "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
 netflix_search = "https://www.flixwatch.co/?s="
 rotten_search = "https://www.rottentomatoes.com/search?search="
+unogs_search = "https://unogs.com/search/{}?start_year=2020&end_year=2020&end_rating=10&type=Movie&orderby=Relevance"
 
 movie_titles = []
 movie_urls = []
