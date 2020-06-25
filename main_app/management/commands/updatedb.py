@@ -1,14 +1,22 @@
 from django.core.management.base import BaseCommand
 from main_app.models import imdbPopularMovie, imdbTopMovie
-import requests, re
+import requests, re, time
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
+
 
 base_url = "https://www.imdb.com"
 imdb_pop_url = "https://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm"
 top_movie_url = "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
-netflix_search = "https://www.flixwatch.co/?s="
+# netflix_search = "https://www.flixwatch.co/?s="
 rotten_search = "https://www.rottentomatoes.com/search?search="
-unogs_search = "https://unogs.com/search/{}?start_year=2020&end_year=2020&end_rating=10&type=Movie&orderby=Relevance"
+netflix_search = "https://unogs.com/search/{}?start_year={}&end_year={}&end_rating=10&type=Movie&orderby=Relevance"
 
 movie_titles = []
 movie_urls = []
@@ -17,90 +25,100 @@ movie_ratings_imdb = []
 movie_img_url = []
 movie_poster = []
 movie_netflix_url = []
+movie_country = ""
 
-
-def rotten_rating(title):
-    pass
-
-    # found = False
-    # if title.find("(") != -1:
-    #     title = title[:title.find("(") - 1]
-    #
-    # result = RottenTomatoesClient.browse_movies(query=title)
-    # print(result)
-
-    # title_searchable = (re.sub("[ ]", "%20", title))
-    #
-    # response = requests.get(rotten_search + title_searchable)
-    # data = response.text
-    #
-    # soup = BeautifulSoup(data, features="lxml")
-    # check = soup.find_all('script', {'id': 'movies-json'})
-    #
-    # new_url = str(check[0])
-    # new_url = new_url[new_url.find('"url":"')+7:]
-    # new_url = new_url[:new_url.find('"')]
-    #
-    # response = requests.get(new_url)
-    # data = response.text
-    #
-    # soup = BeautifulSoup(data, features="lxml")
-    # check = soup.find_all('span', {'id': 'mop-ratings-wrap__percentage'})
-    # print (soup.prettify())
+chrome_options = Options()
+#chrome_options.add_argument("--headless")
+driver = webdriver.Chrome(chrome_options=chrome_options)
+timeout = 10
+wait = WebDriverWait(driver, 10)
 
 
 def check_on_netflix(title):
     found = False
     if title.find("(") != -1:
-        title = title[:title.find("(") - 1]
+        title_searchable = title[:title.find("(") - 1]
+    #   Adding an exception for a popular movie
+    if title_searchable == "Once Upon a Time... in Hollywood":
+        title_searchable = "Once Upon a Time in Hollywood"
 
-    title_searchable = (re.sub("[ ]", "+", title))
-    response = requests.get(netflix_search + title_searchable)
-    print(netflix_search + title_searchable)
-    data = response.text
+    #   Setting up the search URL
+    title_searchable_formated = (re.sub("[ ]", "%20", title_searchable))
+    year = title[title.find("(") + 1:title.find(")")]
+    netflix_search_formatted = netflix_search.format(title_searchable_formated, year, year)
 
-    soup = BeautifulSoup(data, features="lxml")
-    check = soup.find_all('a', {'class': '_blank cvplbd'})
+    #   Get URL and wait for load
+    driver.get(netflix_search_formatted)
+    element_present = EC.presence_of_element_located((By.XPATH, """/html/body/div[9]/div[1]/div/div/div"""))
+    WebDriverWait(driver, timeout).until(element_present)
 
-    if len(check) >= 1:
-        found = True
+    #time.sleep(0.5)
 
-        for check in check:
+    #   Checking if there are results
+    if (len(driver.find_elements_by_class_name("titleitem"))) == 0:
+        print("Not Found")
+        return found    #   Result not found just return bol found
+    else:
+        driver.find_elements_by_class_name("titleitem")
+        print("FOUND -- Fetching INFO")
 
-            if (title == check.text):
 
-                print("FOUND Perfectly")
-                # found = True
-                print("Fetching Netflix Streaming URL for that title !")
-                try:
-                    response = requests.get(check.get("href"))
-                    data = response.text
+    #   Getting page HTML and sending it to BS4 for scraping
+    html = driver.page_source
+    soup = BeautifulSoup(html, features="lxml")
+    check = soup.find_all(attrs={"data-bind": "html:title"})    #Title of the movie
 
-                    soup = BeautifulSoup(data, features="lxml")
-                    check = soup.find('a', {'id': 'Netflix'})
+    #Looping Through until found
+    for check in check:
+        if check.text == title_searchable:
+            found == True
 
-                    print("URL = " + check.get("href"))
-                    movie_netflix_url.append(check.get("href"))
-                except:
-                    print("Error occurred setting URL to placeholder '/#' ")
-                    movie_netflix_url.append(check.get("/#"))
+            driver.find_elements_by_class_name("titleitem")[0].click()  # If found Click the title to bring up overlay
+
+            #Waiting for the page to load
+            try:
+                element_present = EC.presence_of_element_located((By.XPATH, """//*[@id="titleDetails"]/div/div/div[3]/div[3]/div[5]/div[3]"""))
+                WebDriverWait(driver, timeout).until(element_present)
+                #print("\nPage Ready\n")
+
+                # Getting HTML to send to BS4
+                html = driver.page_source
+                soup = BeautifulSoup(html, features="lxml")
+                check = soup.find(attrs={"data-bind": "attr:{href:netflixpath}"})
+                movie_netflix_url.append(check['href'])    # Netflix Stream Link to that title
+
+
+                # Getting Countries for that title
+                check = soup.find_all(attrs={"data-bind": "html:country"})
+                movie_country = ""  # Delete the previous list
+
+                for check in check:     # Loop to go through all countries (Taken care to make sure countries are only seprated by commas)
+                    if check.text[len(check.text) - 1:] == " ":
+                        country = check.text[:len(check.text) - 1]
+                    else:
+                        country = check.text
+                    movie_country +=  country + ","
+                movie_country = movie_country[:len(movie_country) - 1]  # remove last comma
+
+
+                # All the Info fetched and returned found
+                print("Found info Fetched")
                 return found
 
-        check = soup.find_all('a', {'class': '_blank cvplbd'})
-        for check in check:
-            print("FOUND using method 2")
-            response = requests.get(check.get("href"))
-            data = response.text
 
-            soup = BeautifulSoup(data, features="lxml")
-            check = soup.find('a', {'id': 'Netflix'})
 
-            print("URL = " + check.get("href"))
-            movie_netflix_url.append(check.get("href"))
-            return found
+
+            except TimeoutException: # Page not loaded SO returning not found
+                print("Loading took too much time!")
+                print("NOT FOUND")
+                return found
+
+
 
     print("NOT FOUND")
     return found
+
+
 
 
 def updatedb_popmovies():
@@ -176,7 +194,7 @@ def updatedb_popmovies():
                              movie_urls[x]))
         imdbPopularMovie.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                         description=movie_descs[x],
-                                        rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x])
+                                        rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x], country=movie_country)
     print("DB UPDATED")
 
 
@@ -243,6 +261,7 @@ def updatedb_topmovies():
 
         # For Testing purposes stop scraping after nth movie rank
         # if movie_rank > 5:
+        #     driver.quit()
         #     break
 
     delet.delete()  # Deleting Previous DB to save space
@@ -253,7 +272,7 @@ def updatedb_topmovies():
                              movie_urls[x]))
         imdbTopMovie.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                     description=movie_descs[x],
-                                    rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x])
+                                    rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x], country=movie_country)
     print("DB UPDATED")
 
 
@@ -266,10 +285,14 @@ class Command(BaseCommand):
     def handle(self, **options):
         if options['arg'] == "popm":  # Update IMDB Popular Movie Index
             updatedb_popmovies()
+            driver.quit()
         elif options['arg'] == "topm":  # Update IMDB Top Movie Index
             updatedb_topmovies()
+            driver.quit()
         elif options['arg'] == "test":  # For testing purposes
             # title = input("Enter movie title : ")
-            check_on_netflix("The Shawshank Redemption")
+            check_on_netflix("Da 5 Bloods (2020)")
+            driver.quit()
+
 
 # Bismillah Alhumdilillah

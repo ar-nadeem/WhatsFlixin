@@ -10,7 +10,7 @@ class imdbPopularMovie(models.Model):
     rank = models.CharField(max_length=100)
     imdb_rating = models.CharField(max_length=100)
     netflix_url = models.CharField(max_length=500, default="#")
-    country = models.CharField(max_length=500, default="#")
+    country = models.CharField(max_length=2000, default="#")
 
     def __str__(self):
         return '{} - {}'.format(self.rank, self.title)
