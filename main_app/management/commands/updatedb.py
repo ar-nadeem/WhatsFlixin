@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from main_app.models import imdbPopularMovie, imdbTopMovie
-import requests, re, time
+import requests, re, time, os
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -27,9 +27,22 @@ movie_poster = []
 movie_netflix_url = []
 movie_country = ""
 
-chrome_options = Options()
-#chrome_options.add_argument("--headless")
-driver = webdriver.Chrome(chrome_options=chrome_options)
+######################### HEROKU  ################################
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
+
+##################### LOCAL #######################
+# chrome_options = Options()
+# chrome_options.add_argument("--headless")
+# driver = webdriver.Chrome(chrome_options=chrome_options)
+
+
+
 timeout = 10
 wait = WebDriverWait(driver, 10)
 
