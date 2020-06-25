@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 class imdbPopularMovie(models.Model):
 
-    poster_link = models.CharField(max_length=500)
+    poster_link = models.CharField(max_length=1000)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
     rank = models.CharField(max_length=100)
@@ -20,7 +20,7 @@ class imdbPopularMovie(models.Model):
 
 
 class imdbTopMovie(models.Model):
-    poster_link = models.CharField(max_length=500)
+    poster_link = models.CharField(max_length=1000)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
     rank = models.CharField(max_length=100)

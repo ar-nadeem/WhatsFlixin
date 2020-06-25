@@ -18,6 +18,7 @@ top_movie_url = "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
 rotten_search = "https://www.rottentomatoes.com/search?search="
 netflix_search = "https://unogs.com/search/{}?start_year={}&end_year={}&end_rating=10&type=Movie&orderby=Relevance"
 
+movie_rank = 0
 movie_titles = []
 movie_urls = []
 movie_descs = []
@@ -25,7 +26,7 @@ movie_ratings_imdb = []
 movie_img_url = []
 movie_poster = []
 movie_netflix_url = []
-movie_country = ""
+movie_country = []
 
 ######################### HEROKU  ################################
 chrome_options = webdriver.ChromeOptions()
@@ -103,16 +104,16 @@ def check_on_netflix(title):
 
                 # Getting Countries for that title
                 check = soup.find_all(attrs={"data-bind": "html:country"})
-                movie_country = ""  # Delete the previous list
 
+                #Setting country_appended Back to null string
+                country_appended= ""
                 for check in check:     # Loop to go through all countries (Taken care to make sure countries are only seprated by commas)
                     if check.text[len(check.text) - 1:] == " ":
-                        country = check.text[:len(check.text) - 1]
+                        country_appended += check.text[:len(check.text) - 1] + ","
                     else:
-                        country = check.text
-                    movie_country +=  country + ","
-                movie_country = movie_country[:len(movie_country) - 1]  # remove last comma
+                        country_appended += check.text + ","
 
+                movie_country.append(country_appended[:len(country_appended) - 1])    # remove last comma and append
 
                 # All the Info fetched and returned found
 
