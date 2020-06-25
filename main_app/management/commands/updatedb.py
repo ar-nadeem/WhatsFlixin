@@ -84,7 +84,7 @@ def check_on_netflix(title):
     #Looping Through until found
     for check in check:
         if check.text == title_searchable:
-            found == True
+            found = True
 
             driver.find_elements_by_class_name("titleitem")[0].click()  # If found Click the title to bring up overlay
 
@@ -115,7 +115,7 @@ def check_on_netflix(title):
 
 
                 # All the Info fetched and returned found
-                print("Found info Fetched")
+
                 return found
 
 
@@ -128,7 +128,7 @@ def check_on_netflix(title):
 
 
 
-    print("NOT FOUND")
+    print("THE IF FOR TITLE WAS NOT FOUND")
     return found
 
 
@@ -175,6 +175,7 @@ def updatedb_popmovies():
         if check_on_netflix(title) == False:
             continue  # If not found skips the loop for this title
         movie_titles.append(title)
+        print("Found info Fetched")
 
         # Getting Description
         desc = soup.find('div', class_="summary_text")
@@ -252,6 +253,7 @@ def updatedb_topmovies():
         if check_on_netflix(title) == False:
             continue  # If not found skips the loop for this title
         movie_titles.append(title)
+        print("Found info Fetched")
 
         # Getting Description
         desc = soup.find('div', class_="summary_text")
@@ -272,7 +274,7 @@ def updatedb_topmovies():
         image = image[:(image.find("V1_")) + 3] + "SY1000_CR0,0,675,1000_AL_.jpg"
         movie_img_url.append(image)
 
-        # For Testing purposes stop scraping after nth movie rank
+        #For Testing purposes stop scraping after nth movie rank
         # if movie_rank > 5:
         #     driver.quit()
         #     break
