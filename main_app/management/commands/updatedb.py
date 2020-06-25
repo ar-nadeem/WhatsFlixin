@@ -43,8 +43,8 @@ driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), c
 
 
 
-timeout = 10
-wait = WebDriverWait(driver, 10)
+timeout = 60
+wait = WebDriverWait(driver, 60)
 
 
 def check_on_netflix(title):
