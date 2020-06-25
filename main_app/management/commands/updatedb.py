@@ -209,7 +209,7 @@ def updatedb_popmovies():
                              movie_urls[x]))
         imdbPopularMovie.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                         description=movie_descs[x],
-                                        rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x], country=movie_country)
+                                        rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x], country=movie_country[x])
     print("DB UPDATED")
 
 
@@ -288,7 +288,7 @@ def updatedb_topmovies():
                              movie_urls[x]))
         imdbTopMovie.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                     description=movie_descs[x],
-                                    rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x], country=movie_country)
+                                    rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x], country=movie_country[x])
     print("DB UPDATED")
 
 
