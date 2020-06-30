@@ -1,8 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import imdbPopularMovie
-from .models import imdbTopMovie
+from .models import imdbPopMovie, imdbTopMovie, imdbTopTv, imdbPopTv
 # Register your models here.
-admin.site.register(imdbPopularMovie)
+admin.site.register(imdbPopMovie)
 admin.site.register(imdbTopMovie)
+admin.site.register(imdbTopTv)
+admin.site.register(imdbPopTv)

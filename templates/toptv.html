@@ -1,11 +1,11 @@
 {% extends 'main.html' %}
     {% block content %}
-        <title>WhatsFlixin - TopRated Movies</title>
+        <title>WhatsFlixin - TopRated TV</title>
         {% load static %}
 
         {% include "sortbar.html" %}
 
-        {% for movie in imdb_Top_Movies %}
+        {% for tv in imdb_Top_Tv %}
                 <!-- Main Grid to Display Movies-->
                 <div class="container  text-white mb-2 border border-dark rounded-lg  " style="background:transparent;border-width:3px !important" >
 
@@ -18,7 +18,7 @@
                                 <span class="badge badge-pill "style="background:rgba(68,255,0,0.5)">
 
 
-                                {{ movie.rank }}
+                                {{ tv.rank }}
 
                                 </span>
                             </h1>
@@ -27,27 +27,27 @@
                         <!-- Poster Thumbnail Column -->
                         <div class="col-sm-2 Image ">
 
-                            <img src="{{ movie.poster_link}}" alt="{{ movie.title }}" class="img-thumbnail">
+                            <img src="{{ tv.poster_link}}" alt="{{ tv.title }}" class="img-thumbnail">
                         </div>
 
                         <!-- Title & Description Column-->
-                        <div class="col-sm-7 Description">
+                        <div class="col-sm-7 Description ">
 
                             <!-- Title -->
-                            <div class="badge text-white mt-3 text-center" style="background:rgba(255,0,0,0.5);">
-                                <h3 style="word-wrap: break-word;">
-                                {{ movie.title }}
+                            <span class="badge text-white mt-3 ml-auto" style="background:rgba(255,0,0,0.5)">
+                                <h3 class="text-center">
+                                {{ tv.title }}
                                 </h3>
-                            </div>
+                            </span>
 
                             <hr/>
 
                             <!-- Description-->
-                            <div>
-                                <p>
-                                    {{ movie.description}}
-                                </p>
-                            </div>
+                            <span>
+                                <p1>
+                                    {{ tv.description}}
+                                </p1>
+                            </span>
                         </div>
 
                         <!-- Rating & other stuff column-->
@@ -58,13 +58,13 @@
                             <!-- IMDB Rating-->
                             <h6 class="mt-3">
                                 <span class="badge-pill badge-secondary badge-warning">
-                                {{ movie.imdb_rating}}
+                                {{ tv.imdb_rating}}
                                 </span>
                             </h6>
 
                             <!-- Watch on Netlfix button-->
                             <span>
-                                <a href="{{ movie.netflix_url}}"  target="_blank" class="btn text-white active" role="button" style="background: #a00911">
+                                <a href="{{ tv.netflix_url}}"  target="_blank" class="btn text-white active" role="button" style="background: #a00911">
                                     Watch on Netflix
                                 </a>
                             </span>
