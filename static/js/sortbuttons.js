@@ -30,7 +30,7 @@
     $(document).on('click',".avail_button",function (e) {
 
         e.preventDefault();
-       $.get("http://ip-api.com/json", function(response) {console.log(response.country);
+       $.get("https://ip-api.com/json", function(response) {console.log(response.country);
 
         $.ajax({
             type: 'POST',
