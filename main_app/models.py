@@ -6,11 +6,11 @@ class imdbPopMovie(models.Model):
     poster_link = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    rank = models.CharField(max_length=5)
+    rank = models.IntegerField(blank=True, null=True)
     imdb_rating = models.CharField(max_length=10)
     netflix_url = models.CharField(max_length=500, default="#")
     country = models.CharField(max_length=750, default="#")
-    release_date = models.CharField(max_length=750, default="#")
+    release_date = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{} - {}'.format(self.rank, self.title)
@@ -23,11 +23,11 @@ class imdbTopMovie(models.Model):
     poster_link = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    rank = models.CharField(max_length=5)
+    rank = models.IntegerField(blank=True, null=True)
     imdb_rating = models.CharField(max_length=10)
     netflix_url = models.CharField(max_length=500, default="#")
     country = models.CharField(max_length=750, default="#")
-    release_date = models.CharField(max_length=750, default="#")
+    release_date = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{} - {}'.format(self.rank, self.title)
@@ -40,11 +40,11 @@ class imdbPopTv(models.Model):
     poster_link = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    rank = models.CharField(max_length=5)
+    rank = models.IntegerField(blank=True, null=True)
     imdb_rating = models.CharField(max_length=10)
     netflix_url = models.CharField(max_length=500, default="#")
     country = models.CharField(max_length=750, default="#")
-    release_date = models.CharField(max_length=750, default="#")
+    release_date = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{} - {}'.format(self.rank, self.title)
@@ -57,11 +57,11 @@ class imdbTopTv(models.Model):
     poster_link = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    rank = models.CharField(max_length=5)
+    rank = models.IntegerField(blank=True, null=True)
     imdb_rating = models.CharField(max_length=10)
     netflix_url = models.CharField(max_length=500, default="#")
     country = models.CharField(max_length=750, default="#")
-    release_date = models.CharField(max_length=750, default="#")
+    release_date = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{} - {}'.format(self.rank, self.title)

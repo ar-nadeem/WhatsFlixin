@@ -58,7 +58,7 @@ def imdbPopMovieView(request):
             wanted_items = set()
             for models in imdb_Pop_Movie_DB:
                 if models.country.find(country) > -1:
-                    print(models.title+" is watchable")
+
                     wanted_items.add(models.pk)
 
             imdb_Pop_Movie_DB= imdbPopMovie.objects.filter(pk__in=wanted_items)
@@ -69,7 +69,7 @@ def imdbPopMovieView(request):
 
     stuff_for_frontend = {
         'imdb_Pop_Movies': imdb_Pop_Movie_DB,
-        'nbar': 'movie',
+        'nbar': 'popm',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
 
@@ -132,14 +132,14 @@ def imdbTopMovieView(request):
         wanted_items = set()
         for models in imdb_Top_Movie_DB:
             if models.country.find(country) > -1:
-                print(models.title + " is watchable")
+
                 wanted_items.add(models.pk)
 
         imdb_Top_Movie_DB = imdbTopMovie.objects.filter(pk__in=wanted_items)
 
     stuff_for_frontend = {
         'imdb_Top_Movies': imdb_Top_Movie_DB,
-        'nbar': 'movie',
+        'nbar': 'topm',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
     }
@@ -203,14 +203,15 @@ def imdbPopTvView(request):
         wanted_items = set()
         for models in imdb_Pop_Tv_DB:
             if models.country.find(country) > -1:
-                print(models.title + " is watchable")
+
                 wanted_items.add(models.pk)
 
         imdb_Pop_Tv_DB = imdbPopTv.objects.filter(pk__in=wanted_items)
 
     stuff_for_frontend = {
         'imdb_Pop_Tv': imdb_Pop_Tv_DB,
-        'nbar': 'tv','arrow_pos': arrow,
+        'nbar': 'poptv',
+        'arrow_pos': arrow,
         'button_disabled': button_pressed,
 
     }
@@ -274,7 +275,6 @@ def imdbTopTvView(request):
         wanted_items = set()
         for models in imdb_Top_Tv_DB:
             if models.country.find(country) > -1:
-                print(models.title + " is watchable")
                 wanted_items.add(models.pk)
 
         imdb_Top_Tv_DB = imdbTopTv.objects.filter(pk__in=wanted_items)
@@ -283,7 +283,7 @@ def imdbTopTvView(request):
 
     stuff_for_frontend = {
         'imdb_Top_Tv': imdb_Top_Tv_DB,
-        'nbar': 'tv',
+        'nbar': 'toptv',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
     }

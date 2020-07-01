@@ -31,17 +31,17 @@ movie_country = []
 tv_rel_date = []
 
 ######################### HEROKU  ################################
-chrome_options = webdriver.ChromeOptions()
-chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--no-sandbox")
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+# chrome_options = webdriver.ChromeOptions()
+# chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+# chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--disable-dev-shm-usage")
+# chrome_options.add_argument("--no-sandbox")
+# driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
 ##################### LOCAL #######################
-# chrome_options = Options()
-# chrome_options.add_argument("--headless")
-# driver = webdriver.Chrome(chrome_options=chrome_options)
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+driver = webdriver.Chrome(chrome_options=chrome_options)
 
 
 timeout = 60
@@ -272,9 +272,9 @@ def updatedb_topmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 15:
-        #     driver.quit()
-        #     break
+        if movie_rank > 15:
+            driver.quit()
+            break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -328,7 +328,7 @@ def updatedb_toptv():
             if (date_for_search[len(date_for_search) - 1:]) != ")":
                 date_for_search += ")"
 
-            tv_rel_date.append(date_for_search)
+
 
 
 
@@ -343,7 +343,7 @@ def updatedb_toptv():
             continue  # If not found skips the loop for this title
         movie_titles.append(title+" "+date_for_display)
         print("Found info Fetched")
-
+        tv_rel_date.append(date_for_search)
         # Getting Description
         desc = soup.find('div', class_="summary_text")
         movie_descs.append(desc.text.strip())
@@ -418,7 +418,8 @@ def updatedb_poptv():
             date_for_search = date.text.strip()[date.text.strip().find("("):date.text.strip().find("–")]
             if (date_for_search[len(date_for_search) - 1:]) != ")":
                 date_for_search += ")"
-            tv_rel_date.append(date_for_search)
+
+
 
 
 
@@ -433,6 +434,7 @@ def updatedb_poptv():
             continue  # If not found skips the loop for this title
         movie_titles.append(title+" "+date_for_display)
         print("Found info Fetched")
+        tv_rel_date.append(date_for_search)
 
         # Getting Description
         desc = soup.find('div', class_="summary_text")

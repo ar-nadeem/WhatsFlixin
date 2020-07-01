@@ -9,39 +9,35 @@
 
             <div class="col-sm-1 pt-1 pl-3" style="opacity: 1">
 
-                    <form id="rank_forum">
-                     {% csrf_token %}
-                    <button type="submit" id="rank_button" class="btn btn-danger rank_button {% if button_disabled == 'rank' %}disabled{%  endif %}" value="rank">Ranking</button>
-                    </form>
+
+
+                    <button type="button" id="rank_button" class="btn btn-danger  {% if button_disabled == 'rank' %}disabled{%  endif %}" value="rank">Ranking</button>
 
                 </div>
                 <div class="col-sm-1 pl-1 pt-1" style="opacity: 1">
 
-                    <form id="avail_forum">
-                     {% csrf_token %}
-                    <button type="submit" id="avail_button" class="btn btn-danger avail_button {% if button_disabled == 'avail' %}disabled{%  endif %}" value="avail" >Availability</button>
-                    </form>
+
+
+                    <button type="button" id="avail_button" class="btn btn-danger  {% if button_disabled == 'avail' %}disabled{%  endif %}" value="avail" >Availability</button>
+
 
                 </div>
                 <div class="col-sm-1 pl-2 pt-1" style="opacity: 1">
 
-                    <form id="reldate_forum">
-                     {% csrf_token %}
-                    <button  type="submit" id="reldate_button" class="btn btn-danger reldate_button {% if button_disabled == 'reldate' %}disabled{%  endif %}" value="reldate" >Date</button>
-                    </form>
+
+                    <button  type="button" id="reldate_button" class="btn btn-danger  {% if button_disabled == 'reldate' %}disabled{%  endif %}" value="reldate" >Date</button>
 
                 </div>
 
 
                  <div class="col-sm-1 pl-2 pt-2">
-                 <form id="arrow_form">
-                    {% csrf_token %}
-                    <button type="submit" id="arrow_button" class="btn btn-success btn-sm arrow_button" value="{% if arrow_pos == 'up' %}up{% else  %}down{%  endif %}">
+
+
+                    <button type="button" id="arrow_button" class="btn btn-success btn-sm " value="{% if arrow_pos == 'up' %}up{% else  %}down{%  endif %}">
                         <span style="color: {% if arrow_pos == 'up' %}white{% else  %} gray {%  endif %}">▲</span>
                         <span style="color: {% if arrow_pos == 'down' %}white{% else  %} gray  {%  endif %}">▼</span>
-
                     </button>
-                 </form>
+
                  </div>
 
 
@@ -49,4 +45,120 @@
         </div>
 
 
+<script type = "text/javascript">
+    $("#rank_button").on("click", function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                button_post: $("#rank_button").val(),
+
+                arrow: $("#arrow_button").val(),
+                reldate: $("#reldate_button").attr("class"),
+                avail: $("#avail_button").attr("class"),
+                rank: $("#rank_button").attr("class"),
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+
+                action: 'post'
+            },
+            success: function (data) {
+                $("body").html(data);
+            },
+        });
+        return false;
+
+
+    });
+
+
+    $("#reldate_button").on("click", function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                button_post: $("#reldate_button").val(),
+
+                arrow: $("#arrow_button").val(),
+                reldate: $("#reldate_button").attr("class"),
+                avail: $("#avail_button").attr("class"),
+                rank: $("#rank_button").attr("class"),
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                action: 'post'
+            },
+            success: function (data) {
+
+                $("body").html(data);
+            },
+        });
+        return false;
+    });
+
+    $("#avail_button").on("click", function (e) {
+        $.getJSON('https://api.ipify.org?format=jsonp&callback=?', function(data) {
+
+            console.log(JSON.stringify(data, null, 2).ip);
+            var ip=jQuery.parseJSON(JSON.stringify(data, null, 2))
+            var ip = ip.ip
+            console.log(ip)
+
+
+        e.preventDefault();
+       $.getJSON("https://cors-anywhere.herokuapp.com/http://www.geoplugin.net/json.gp?ip="+ip,function(response){
+            console.log(response.geoplugin_countryName);
+            $.ajax({
+                type: 'POST',
+                data: {
+                    button_post: $("#avail_button").val(),
+
+                    arrow: $("#arrow_button").val(),
+                    reldate: $("#reldate_button").attr("class"),
+                    avail: $("#avail_button").attr("class"),
+                    rank: $("#rank_button").attr("class"),
+                    country: response.geoplugin_countryName,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+
+                    action: 'post'
+                },
+                success: function (data) {
+                    $("body").html(data);
+                },
+            });
+        });
+       });
+        return false;
+
+    });
+
+    $("#arrow_button").on("click", function (e) {
+
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                arrow_post: $("#arrow_button").val(),
+                reldate: $("#reldate_button").attr("class"),
+                avail: $("#avail_button").attr("class"),
+                rank: $("#rank_button").attr("class"),
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                action: 'post',
+
+            },
+            success: function (data) {
+                $("body").html(data);
+
+
+            },
+        });
+        return false;
+
+
+    });
+
+
+</script>
 

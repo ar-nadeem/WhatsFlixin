@@ -1,11 +1,11 @@
 {% extends 'main.html' %}
-
     {% block content %}
+
         <title>WhatsFlixin - Popular Movies</title>
         {% load static %}
 
-
             {% include "sortbar.html" %}
+
 
             {% for movie in imdb_Pop_Movies %}
                 <!-- Main Grid to Display Movies-->
