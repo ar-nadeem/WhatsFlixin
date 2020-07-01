@@ -8,6 +8,7 @@ def imdbPopMovieView(request):
     arrow ="up"
     button_pressed ="rank"
     only_arrow_post = False
+    country = "N/A"
 
 
     imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('rank')
@@ -56,12 +57,16 @@ def imdbPopMovieView(request):
             print(country)
             imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('rank')
             wanted_items = set()
+            not_wanted_items = set()
             for models in imdb_Pop_Movie_DB:
                 if models.country.find(country) > -1:
-
                     wanted_items.add(models.pk)
-
-            imdb_Pop_Movie_DB= imdbPopMovie.objects.filter(pk__in=wanted_items)
+                else:
+                    not_wanted_items.add(models.pk)
+            if arrow == "up":
+                imdb_Pop_Movie_DB= imdbPopMovie.objects.filter(pk__in=wanted_items)
+            else:
+                imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=not_wanted_items)
 
 
 
@@ -72,6 +77,7 @@ def imdbPopMovieView(request):
         'nbar': 'popm',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
+        'country':country
 
     }
 

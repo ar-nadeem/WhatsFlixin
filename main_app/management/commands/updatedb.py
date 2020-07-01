@@ -193,8 +193,8 @@ def updatedb_popmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 15:
-            break
+        # if movie_rank > 15:
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -272,9 +272,9 @@ def updatedb_topmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 15:
-            driver.quit()
-            break
+        # if movie_rank > 15:
+        #     driver.quit()
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -364,9 +364,9 @@ def updatedb_toptv():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 15:
-            driver.quit()
-            break
+        # if movie_rank > 15:
+        #     driver.quit()
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -456,9 +456,9 @@ def updatedb_poptv():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 15:
-            driver.quit()
-            break
+        # if movie_rank > 15:
+        #     driver.quit()
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
