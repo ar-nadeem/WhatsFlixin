@@ -193,7 +193,7 @@ def updatedb_popmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150:
+        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150 or movie_rank == 200 or movie_rank == 250:
             print("DELETING COOKIES AND RESTARTING BROWSER")
             driver.quit()
             chrome_options = webdriver.ChromeOptions()
@@ -281,7 +281,7 @@ def updatedb_topmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150:
+        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150 or movie_rank == 200 or movie_rank == 250:
             print("DELETING COOKIES AND RESTARTING BROWSER")
             driver.quit()
             driver.quit()
@@ -382,7 +382,7 @@ def updatedb_toptv():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150:
+        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150 or movie_rank == 200 or movie_rank == 250:
             print("DELETING COOKIES AND RESTARTING BROWSER")
             driver.quit()
             chrome_options = webdriver.ChromeOptions()
@@ -482,7 +482,7 @@ def updatedb_poptv():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150:
+        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150 or movie_rank == 200 or movie_rank == 250:
             print("DELETING COOKIES AND RESTARTING BROWSER")
             driver.quit()
             chrome_options = webdriver.ChromeOptions()
