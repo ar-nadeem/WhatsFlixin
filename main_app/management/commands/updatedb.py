@@ -195,7 +195,6 @@ def updatedb_popmovies():
         # For Testing purposes stop scraping after nth movie rank
         if movie_rank > 50:
             print("DELETING COOKIES AND RESTARTING BROWSER")
-            driver.manage().deleteAllCookies();
             driver.quit()
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                       chrome_options=chrome_options)
@@ -278,7 +277,6 @@ def updatedb_topmovies():
         # For Testing purposes stop scraping after nth movie rank
         if movie_rank > 50:
             print("DELETING COOKIES AND RESTARTING BROWSER")
-            driver.manage().deleteAllCookies();
             driver.quit()
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                       chrome_options=chrome_options)
@@ -373,7 +371,6 @@ def updatedb_toptv():
         # For Testing purposes stop scraping after nth movie rank
         if movie_rank > 50:
             print("DELETING COOKIES AND RESTARTING BROWSER")
-            driver.manage().deleteAllCookies();
             driver.quit()
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                       chrome_options=chrome_options)
@@ -468,7 +465,6 @@ def updatedb_poptv():
         # For Testing purposes stop scraping after nth movie rank
         if movie_rank > 50:
             print("DELETING COOKIES AND RESTARTING BROWSER")
-            driver.manage().deleteAllCookies();
             driver.quit()
 
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
