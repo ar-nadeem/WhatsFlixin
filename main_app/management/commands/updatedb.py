@@ -130,6 +130,7 @@ def check_on_netflix(title):
 
 
 def updatedb_popmovies():
+    global driver
     print("Updating DB for Popular Movies")
     delet = imdbPopMovie.objects.all()
 
@@ -195,6 +196,11 @@ def updatedb_popmovies():
         if movie_rank > 50:
             print("DELETING COOKIES AND RESTARTING BROWSER")
             driver.quit()
+            chrome_options = webdriver.ChromeOptions()
+            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--no-sandbox")
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                       chrome_options=chrome_options)
 
@@ -212,6 +218,7 @@ def updatedb_popmovies():
 
 
 def updatedb_topmovies():
+    global driver
     print("Updating DB for Top Rated Movies")
     delet = imdbTopMovie.objects.all()
 
@@ -277,6 +284,12 @@ def updatedb_topmovies():
         if movie_rank > 50:
             print("DELETING COOKIES AND RESTARTING BROWSER")
             driver.quit()
+            driver.quit()
+            chrome_options = webdriver.ChromeOptions()
+            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--no-sandbox")
             driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                                       chrome_options=chrome_options)
 
@@ -294,6 +307,7 @@ def updatedb_topmovies():
 
 
 def updatedb_toptv():
+    global driver
     print("Updating DB for Top Rated TV")
     delet = imdbTopTv.objects.all()
 
@@ -392,6 +406,7 @@ def updatedb_toptv():
     print("DB UPDATED")
 
 def updatedb_poptv():
+    global driver
     print("Updating DB for Popular TV")
     delet = imdbPopTv.objects.all()
 
