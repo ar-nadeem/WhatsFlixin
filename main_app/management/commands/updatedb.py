@@ -193,8 +193,12 @@ def updatedb_popmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 15:
-        #     break
+        if movie_rank > 50:
+            print("DELETING COOKIES AND RESTARTING BROWSER")
+            driver.manage().deleteAllCookies();
+            driver.quit()
+            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                      chrome_options=chrome_options)
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -272,9 +276,12 @@ def updatedb_topmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 15:
-        #     driver.quit()
-        #     break
+        if movie_rank > 50:
+            print("DELETING COOKIES AND RESTARTING BROWSER")
+            driver.manage().deleteAllCookies();
+            driver.quit()
+            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                      chrome_options=chrome_options)
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -364,9 +371,12 @@ def updatedb_toptv():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 15:
-        #     driver.quit()
-        #     break
+        if movie_rank > 50:
+            print("DELETING COOKIES AND RESTARTING BROWSER")
+            driver.manage().deleteAllCookies();
+            driver.quit()
+            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                      chrome_options=chrome_options)
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -456,9 +466,13 @@ def updatedb_poptv():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 15:
-        #     driver.quit()
-        #     break
+        if movie_rank > 50:
+            print("DELETING COOKIES AND RESTARTING BROWSER")
+            driver.manage().deleteAllCookies();
+            driver.quit()
+
+            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+                                      chrome_options=chrome_options)
 
     delet.delete()  # Deleting Previous DB to save space
 
