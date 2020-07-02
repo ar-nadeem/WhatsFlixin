@@ -77,7 +77,7 @@ def imdbPopMovieView(request):
         'nbar': 'popm',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
-        'country':country
+        'country':country,
 
     }
 
@@ -152,6 +152,7 @@ def imdbTopMovieView(request):
         'nbar': 'topm',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
+        'country':country,
     }
 
     return render(request, 'topmovies.html', stuff_for_frontend)
@@ -227,6 +228,7 @@ def imdbPopTvView(request):
         'nbar': 'poptv',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
+        'country':country,
 
     }
 
@@ -304,6 +306,7 @@ def imdbTopTvView(request):
         'nbar': 'toptv',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
+        'country':country,
     }
 
     return render(request, 'toptv.html', stuff_for_frontend)
