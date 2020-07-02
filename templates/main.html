@@ -34,16 +34,16 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-                        <li class="navbar-nav">
+                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'popm' %}#b10505{% endif %}">
                           <a class="nav-link {% if nbar == 'popm' %}active{% endif %}" href="/popular-movie" tabindex="-1" aria-disabled="true">Popular Movies</a>
                     </li>
-                        <li class="navbar-nav">
+                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'topm' %}#b10505{% endif %}">
                           <a class="nav-link {% if nbar == 'topm' %}active{% endif %}" href="/top-rated-movie" tabindex="-1" aria-disabled="true">Top Rated Movies</a>
                     </li>
-                        <li class="navbar-nav">
+                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'poptv' %}#b10505{% endif %}">
                           <a class="nav-link {% if nbar == 'poptv' %}active{% endif %}" href="/popular-tv" tabindex="-1" aria-disabled="true">Popular TV</a>
                     </li>
-                        <li class="navbar-nav">
+                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'toptv' %}#b10505{% endif %}">
                           <a class="nav-link {% if nbar == 'toptv' %}active{% endif %}" href="/top-rated-tv" tabindex="-1" aria-disabled="true">Top Rated TV</a>
                     </li>
 
@@ -95,6 +95,7 @@
 
         <p class="lead">The place to visit when wondering what to watch on Netflix.</p>
         <p>This website is under low maintenance</p>
+        <p>Email me for bugs & features: ar-nadeem@outlook.com 😊</p>
 
         <hr class="my-4">
 
