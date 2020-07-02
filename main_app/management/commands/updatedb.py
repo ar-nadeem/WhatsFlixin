@@ -103,7 +103,8 @@ def check_on_netflix(title):
 
                 if title_searchable == "Dark":
                     movie_netflix_url.append("https://www.netflix.com/title/80100172")
-                movie_netflix_url.append(check['href'])  # Netflix Stream Link to that title
+                else:
+                    movie_netflix_url.append(check['href'])  # Netflix Stream Link to that title
 
                 # Getting Countries for that title
                 check = soup.find_all(attrs={"data-bind": "html:country"})

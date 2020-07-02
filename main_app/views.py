@@ -136,12 +136,16 @@ def imdbTopMovieView(request):
         print(country)
         imdb_Top_Movie_DB = imdbTopMovie.objects.all().order_by('rank')
         wanted_items = set()
+        not_wanted_items = set()
         for models in imdb_Top_Movie_DB:
             if models.country.find(country) > -1:
-
                 wanted_items.add(models.pk)
-
-        imdb_Top_Movie_DB = imdbTopMovie.objects.filter(pk__in=wanted_items)
+            else:
+                not_wanted_items.add(models.pk)
+        if arrow == "up":
+            imdb_Top_Movie_DB = imdbTopMovie.objects.filter(pk__in=wanted_items)
+        else:
+            imdb_Top_Movie_DB = imdbTopMovie.objects.filter(pk__in=not_wanted_items)
 
     stuff_for_frontend = {
         'imdb_Top_Movies': imdb_Top_Movie_DB,
@@ -207,12 +211,16 @@ def imdbPopTvView(request):
         print(country)
         imdb_Pop_Tv_DB = imdbPopTv.objects.all().order_by('rank')
         wanted_items = set()
+        not_wanted_items = set()
         for models in imdb_Pop_Tv_DB:
             if models.country.find(country) > -1:
-
                 wanted_items.add(models.pk)
-
-        imdb_Pop_Tv_DB = imdbPopTv.objects.filter(pk__in=wanted_items)
+            else:
+                not_wanted_items.add(models.pk)
+        if arrow == "up":
+            imdb_Pop_Tv_DB = imdbPopTv.objects.filter(pk__in=wanted_items)
+        else:
+            imdb_Pop_Tv_DB = imdbPopTv.objects.filter(pk__in=not_wanted_items)
 
     stuff_for_frontend = {
         'imdb_Pop_Tv': imdb_Pop_Tv_DB,
@@ -279,12 +287,16 @@ def imdbTopTvView(request):
         print(country)
         imdb_Top_Tv_DB = imdbTopTv.objects.all().order_by('rank')
         wanted_items = set()
+        not_wanted_items = set()
         for models in imdb_Top_Tv_DB:
             if models.country.find(country) > -1:
                 wanted_items.add(models.pk)
-
-        imdb_Top_Tv_DB = imdbTopTv.objects.filter(pk__in=wanted_items)
-
+            else:
+                not_wanted_items.add(models.pk)
+        if arrow == "up":
+            imdb_Top_Tv_DB = imdbTopTv.objects.filter(pk__in=wanted_items)
+        else:
+            imdb_Top_Tv_DB = imdbTopTv.objects.filter(pk__in=not_wanted_items)
 
 
     stuff_for_frontend = {
