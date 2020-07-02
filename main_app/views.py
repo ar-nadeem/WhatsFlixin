@@ -59,7 +59,7 @@ def imdbPopMovieView(request):
             wanted_items = set()
             not_wanted_items = set()
             for models in imdb_Pop_Movie_DB:
-                if models.country.find(country) > -1:
+                if models.country.find(country) >= 0:
                     wanted_items.add(models.pk)
                 else:
                     not_wanted_items.add(models.pk)
@@ -138,7 +138,7 @@ def imdbTopMovieView(request):
         wanted_items = set()
         not_wanted_items = set()
         for models in imdb_Top_Movie_DB:
-            if models.country.find(country) > -1:
+            if models.country.find(country) >= 0:
                 wanted_items.add(models.pk)
             else:
                 not_wanted_items.add(models.pk)
@@ -213,7 +213,7 @@ def imdbPopTvView(request):
         wanted_items = set()
         not_wanted_items = set()
         for models in imdb_Pop_Tv_DB:
-            if models.country.find(country) > -1:
+            if models.country.find(country) >= 0:
                 wanted_items.add(models.pk)
             else:
                 not_wanted_items.add(models.pk)
@@ -289,7 +289,7 @@ def imdbTopTvView(request):
         wanted_items = set()
         not_wanted_items = set()
         for models in imdb_Top_Tv_DB:
-            if models.country.find(country) > -1:
+            if models.country.find(country) >= 0:
                 wanted_items.add(models.pk)
             else:
                 not_wanted_items.add(models.pk)
