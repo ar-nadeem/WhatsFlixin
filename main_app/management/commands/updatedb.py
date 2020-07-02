@@ -54,6 +54,8 @@ def check_on_netflix(title):
     #   Adding an exception for a popular movie
     if title_searchable == "Once Upon a Time... in Hollywood":
         title_searchable = "Once Upon a Time in Hollywood"
+    if title_searchable == "Whose Line Is It Anyway?":
+        return found
 
     #   Setting up the search URL
     title_searchable_formated = (re.sub("[ ]", "%20", title_searchable))
@@ -98,6 +100,9 @@ def check_on_netflix(title):
                 html = driver.page_source
                 soup = BeautifulSoup(html, features="lxml")
                 check = soup.find(attrs={"data-bind": "attr:{href:netflixpath}"})
+
+                if title_searchable == "Dark":
+                    movie_netflix_url.append("https://www.netflix.com/title/80100172")
                 movie_netflix_url.append(check['href'])  # Netflix Stream Link to that title
 
                 # Getting Countries for that title
