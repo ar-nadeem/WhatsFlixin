@@ -89,6 +89,7 @@ def imdbTopMovieView(request):
     arrow ="up"
     button_pressed ="rank"
     only_arrow_post = False
+    country = "N/A"
 
     imdb_Top_Movie_DB = imdbTopMovie.objects.all().order_by('rank')
 
@@ -165,6 +166,7 @@ def imdbPopTvView(request):
     arrow ="up"
     button_pressed ="rank"
     only_arrow_post = False
+    country = "N/A"
 
     imdb_Pop_Tv_DB = imdbPopTv.objects.all().order_by('rank')
 
@@ -241,6 +243,7 @@ def imdbTopTvView(request):
     arrow ="up"
     button_pressed ="rank"
     only_arrow_post = False
+    country = "N/A"
 
     imdb_Top_Tv_DB = imdbTopTv.objects.all().order_by('rank')
 
