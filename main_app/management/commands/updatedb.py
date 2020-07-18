@@ -56,6 +56,9 @@ def check_on_netflix(title):
         title_searchable = "Once Upon a Time in Hollywood"
     if title_searchable == "Whose Line Is It Anyway?":
         return found
+    if title_searchable.find("/") != -1 or title_searchable.find("\\") != -1:
+        print("Cannot Search this title")
+        return found
 
     #   Setting up the search URL
     title_searchable_formated = (re.sub("[ ]", "%20", title_searchable))
