@@ -14,6 +14,9 @@ import os
 import django_heroku
 ###################### FOR HEROKU NEEDS TO BE TURNED ON ##################################
 SECURE_SSL_REDIRECT = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,8 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '0em4o*e(rqp02pf17lgn*$($8#j0tv%kgu6s0h7-qx684547wa'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = ["whatsflixin.com", "whatsflixin.herokuapp.com/", "127.0.0.1"]
 STATIC_URL = '/static/'

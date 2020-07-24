@@ -1,14 +1,13 @@
-
 {% load static %}
 <!doctype html>
 <html lang="en">
 
 <head>
-        <div id="overlay"><span class="spinner"></span></div>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -30,17 +29,19 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}" >
     <!-- Favicon -->
-    <link rel="icon" href="{% static "images/popcorncool.png" %}" type="image/gif" sizes="16x16">
-
+    <link rel="icon" href="{% static "images/icon.png" %}">
+    <title></title>
 
 
 </head>
 
-{% include "navbar.html" %}
+
 
 
 <body>
+<div id="overlay"><span class="spinner"></span></div>
 
+    {% include "navbar.html" %}
 
     <!-- Opening Jumbotron for website-->
     <div class="jumbotron text-white" style="width: 75%; margin-left: auto; margin-right: auto; background: rgba(33,2,2,0.9);">

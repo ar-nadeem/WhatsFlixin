@@ -4,6 +4,7 @@ import requests, re, time, os
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -39,14 +40,15 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 PROXY = "socks5://127.0.0.1:9050"
 chrome_options.add_argument('--proxy-server=%s' % PROXY)
-driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
+# driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
 ##################### LOCAL #######################
 # chrome_options = Options()
 # # chrome_options.add_argument("--headless")
 # PROXY = "socks5://127.0.0.1:9150"
 # chrome_options.add_argument('--proxy-server=%s' % PROXY)
-# driver = webdriver.Chrome(chrome_options=chrome_options)
+# driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
 
 
 timeout = 60
