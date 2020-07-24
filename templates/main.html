@@ -1,16 +1,19 @@
+
 {% load static %}
 <!doctype html>
 <html lang="en">
 
 <head>
+        <div id="overlay"><span class="spinner"></span></div>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7YYGY7E714"></script>
     <script>
@@ -29,70 +32,14 @@
     <!-- Favicon -->
     <link rel="icon" href="{% static "images/popcorncool.png" %}" type="image/gif" sizes="16x16">
 
+
+
 </head>
 
+{% include "navbar.html" %}
 
 
 <body>
-    <!-- Navbar -->
-    <div id="overlay"><span class="spinner"></span></div>
-
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background: rgb(135,3,3);">
-            <a class="navbar-brand" href="/popular-movie">WhatsFlixin</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'popm' %}#b10505{% endif %}">
-                          <a class="nav-link {% if nbar == 'popm' %}active{% endif %}" href="/popular-movie" tabindex="-1" aria-disabled="true">Popular Movies</a>
-                    </li>
-                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'topm' %}#b10505{% endif %}">
-                          <a class="nav-link {% if nbar == 'topm' %}active{% endif %}" href="/top-rated-movie" tabindex="-1" aria-disabled="true">Top Rated Movies</a>
-                    </li>
-                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'poptv' %}#b10505{% endif %}">
-                          <a class="nav-link {% if nbar == 'poptv' %}active{% endif %}" href="/popular-tv" tabindex="-1" aria-disabled="true">Popular TV</a>
-                    </li>
-                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'toptv' %}#b10505{% endif %}">
-                          <a class="nav-link {% if nbar == 'toptv' %}active{% endif %}" href="/top-rated-tv" tabindex="-1" aria-disabled="true">Top Rated TV</a>
-                    </li>
-
-{#            <div class="collapse navbar-collapse" id="navbarCollapse">#}
-{#                <ul class="navbar-nav mr-auto">#}
-{##}
-{#                  <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle {% if nbar == 'movie' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                      Movies#}
-{#                    </a>#}
-{#                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#                          <a class="dropdown-item" href="/popular-movie">Popular</a>#}
-{#                          <a class="dropdown-item" href="/top-rated-movie">Top Rated</a>#}
-{#                        </div>#}
-{#                  </li>#}
-{#                </ul>#}
-{##}
-{#            <div class="collapse navbar-collapse" id="navbarCollapse">#}
-{#                <ul class="navbar-nav mr-auto">#}
-{##}
-{#                  <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle {% if nbar == 'tv' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                      TV#}
-{#                    </a>#}
-{#                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#                          <a class="dropdown-item" href="/popular-tv">Popular</a>#}
-{#                          <a class="dropdown-item" href="/top-rated-tv">Top Rated</a>#}
-{#                        </div>#}
-{#                  </li>#}
-
-                    <!--
-                    <li class="nav-item">
-                          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
-                    -->
-                </ul>
-            </div>
-            </div>
-        </nav>
-
-
 
 
     <!-- Opening Jumbotron for website-->
@@ -103,7 +50,7 @@
 
         <p class="lead">The place to visit when wondering what to watch on Netflix.</p>
         <p>This website is under low maintenance</p>
-        <p>Email me for bugs & features: ar-nadeem@outlook.com 😊</p>
+        <p>Email me for bugs & features: info@whatsflixin.com 😊</p>
 
         <hr class="my-4">
 
@@ -113,9 +60,15 @@
 
 
 
+
     {% block content %}
 
     {% endblock content %}
+
+
+
+</body>
+
 
     <!-- Footer -->
     <footer class="page-footer font-small blue  text-white" style="background: linear-gradient(to top, rgba(77, 0, 0,1) 0%, rgba(0, 0, 0,0) 100%);">
@@ -128,5 +81,5 @@
 
 
 
-</body>
+
 </html>

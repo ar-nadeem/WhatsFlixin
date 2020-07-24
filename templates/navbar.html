@@ -1,0 +1,56 @@
+    <!-- Navbar -->
+
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background: rgb(135,3,3);">
+            <a class="navbar-brand" href="/popular-movie">WhatsFlixin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+{#                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'popm' %}#b10505{% endif %}">#}
+{#                          <a class="nav-link {% if nbar == 'popm' %}active{% endif %}" href="/popular-movie" tabindex="-1" aria-disabled="true">Popular Movies</a>#}
+{#                    </li>#}
+{#                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'topm' %}#b10505{% endif %}">#}
+{#                          <a class="nav-link {% if nbar == 'topm' %}active{% endif %}" href="/top-rated-movie" tabindex="-1" aria-disabled="true">Top Rated Movies</a>#}
+{#                    </li>#}
+{#                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'poptv' %}#b10505{% endif %}">#}
+{#                          <a class="nav-link {% if nbar == 'poptv' %}active{% endif %}" href="/popular-tv" tabindex="-1" aria-disabled="true">Popular TV</a>#}
+{#                    </li>#}
+{#                        <li class="navbar-nav border border-danger  rounded-lg" style="background: {% if nbar == 'toptv' %}#b10505{% endif %}">#}
+{#                          <a class="nav-link {% if nbar == 'toptv' %}active{% endif %}" href="/top-rated-tv" tabindex="-1" aria-disabled="true">Top Rated TV</a>#}
+{#                    </li>#}
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {% if nbar == 'movie' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Movies
+                    </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="/popular-movie">Popular</a>
+                          <a class="dropdown-item" href="/top-rated-movie">Top Rated</a>
+                        </div>
+                  </li>
+                </ul>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {% if nbar == 'tv' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      TV
+                    </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="/popular-tv">Popular</a>
+                          <a class="dropdown-item" href="/top-rated-tv">Top Rated</a>
+                        </div>
+                  </li>
+
+                    <!--
+                    <li class="nav-item">
+                          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                    -->
+                </ul>
+                </div>
+            </div>
+        </nav>

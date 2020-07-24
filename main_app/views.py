@@ -77,7 +77,7 @@ def imdbPopMovieView(request):
         'nbar': 'popm',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
-        'country':country,
+        'country': country,
 
     }
 

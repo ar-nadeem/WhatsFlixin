@@ -75,6 +75,9 @@
             success: function (data) {
                 loading_off()
                 $("body").html(data);
+                $('.dropdown-toggle').dropdown();
+
+
             },
         });
         return false;
@@ -102,6 +105,8 @@
             success: function (data) {
                 loading_off()
                 $("body").html(data);
+                $('.dropdown-toggle').dropdown();
+
             },
         });
         return false;
@@ -136,7 +141,11 @@
                     },
                     success: function (data) {
                         loading_off()
-                        $("body").html(data);
+
+                $("body").html(data);
+                $('.dropdown-toggle').dropdown();
+
+
                     },
                 });
             });
@@ -163,6 +172,8 @@
             },
             success: function (data) {
                 $("body").html(data);
+                $('.dropdown-toggle').dropdown();
+
                 loading_off()
 
             },
@@ -171,6 +182,7 @@
 
 
     });
+
 
 
 

@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
+
 from selenium.common.exceptions import NoSuchElementException
 
 base_url = "https://www.imdb.com"
@@ -36,33 +37,48 @@ chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
+PROXY = "socks5://127.0.0.1:9050"
+chrome_options.add_argument('--proxy-server=%s' % PROXY)
 driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
 ##################### LOCAL #######################
 # chrome_options = Options()
-# chrome_options.add_argument("--headless")
+# # chrome_options.add_argument("--headless")
+# PROXY = "socks5://127.0.0.1:9150"
+# chrome_options.add_argument('--proxy-server=%s' % PROXY)
 # driver = webdriver.Chrome(chrome_options=chrome_options)
 
-timeout = 500
-wait = WebDriverWait(driver, 500)
+
+timeout = 60
+wait = WebDriverWait(driver, 60)
 
 
 def check_on_netflix(title):
     found = False
+    date_found = True
+    title_searchable = "THIS IS A PLACEHOLDER -- SOMETHING WENT WRONG IF YOU SEE THIS"
     if title.find("(") != -1:
         title_searchable = title[:title.find("(") - 1]
+    else:
+        date_found = False
+        title_searchable = title
     #   Adding an exception for a popular movie
+
     if title_searchable == "Once Upon a Time... in Hollywood":
         title_searchable = "Once Upon a Time in Hollywood"
     if title_searchable == "Whose Line Is It Anyway?":
         return found
-    if title_searchable.find("/") != -1 or title_searchable.find("\\") != -1:
-        print("Cannot Search this title")
-        return found
+    if date_found == True:
+        if title_searchable.find("/") != -1:
+            title_searchable = title_searchable[:title_searchable.find("/")]
 
     #   Setting up the search URL
     title_searchable_formated = (re.sub("[ ]", "%20", title_searchable))
-    year = title[title.find("(") + 1:title.find(")")]
+    if date_found == True:
+        year = title[title.find("(") + 1:title.find(")")]
+    else:
+        year=""
+
     netflix_search_formatted = netflix_search.format(title_searchable_formated, year, year)
 
     #   Get URL and wait for load
@@ -202,16 +218,10 @@ def updatedb_popmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150 or movie_rank == 200 or movie_rank == 250:
-            print("DELETING COOKIES AND RESTARTING BROWSER")
-            driver.quit()
-            chrome_options = webdriver.ChromeOptions()
-            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument("--no-sandbox")
-            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-                                      chrome_options=chrome_options)
+        # if movie_rank > 10:
+        #     print("DONE EXITING AT 10")
+        #     driver.quit()
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -290,17 +300,10 @@ def updatedb_topmovies():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150 or movie_rank == 200 or movie_rank == 250:
-            print("DELETING COOKIES AND RESTARTING BROWSER")
-            driver.quit()
-            driver.quit()
-            chrome_options = webdriver.ChromeOptions()
-            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument("--no-sandbox")
-            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-                                      chrome_options=chrome_options)
+        # if movie_rank > 10:
+        #     print("DONE EXITING AT 10")
+        #     driver.quit()
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -391,16 +394,11 @@ def updatedb_toptv():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150 or movie_rank == 200 or movie_rank == 250:
-            print("DELETING COOKIES AND RESTARTING BROWSER")
-            driver.quit()
-            chrome_options = webdriver.ChromeOptions()
-            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument("--no-sandbox")
-            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-                                      chrome_options=chrome_options)
+        # if movie_rank > 10:
+        #     print("DONE EXITING AT 10")
+        #     driver.quit()
+        #     break
+
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -491,17 +489,10 @@ def updatedb_poptv():
         movie_img_url.append(image)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank == 50 or movie_rank == 100 or movie_rank == 150 or movie_rank == 200 or movie_rank == 250:
-            print("DELETING COOKIES AND RESTARTING BROWSER")
-            driver.quit()
-            chrome_options = webdriver.ChromeOptions()
-            chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-            chrome_options.add_argument("--headless")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument("--no-sandbox")
-            driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),
-                                      chrome_options=chrome_options)
-
+        # if movie_rank > 10:
+        #     print("DONE EXITING AT 10")
+        #     driver.quit()
+        #     break
 
 
     delet.delete()  # Deleting Previous DB to save space
@@ -545,18 +536,22 @@ class Command(BaseCommand):
             updatedb_popmovies()
             clear_all_variables()
             driver.quit()
+            print("DONE EVERYTHING ENDED SUCCESSFULLY")
         elif options['arg'] == "topm":  # Update IMDB Top Movie Index
             updatedb_topmovies()
             clear_all_variables()
             driver.quit()
+            print("DONE EVERYTHING ENDED SUCCESSFULLY")
         elif options['arg'] == "poptv":  # Update IMDB Top Movie Index
             updatedb_poptv()
             clear_all_variables()
             driver.quit()
+            print("DONE EVERYTHING ENDED SUCCESSFULLY")
         elif options['arg'] == "toptv":  # Update IMDB Top Movie Index
             updatedb_toptv()
             clear_all_variables()
             driver.quit()
+            print("DONE EVERYTHING ENDED SUCCESSFULLY")
         elif options['arg'] == "test":  # For testing purposes
             # title = input("Enter movie title : ")
             check_on_netflix("Da 5 Bloods (2020)")
