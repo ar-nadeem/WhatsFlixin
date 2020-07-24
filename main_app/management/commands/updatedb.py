@@ -11,7 +11,6 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 
 from selenium.common.exceptions import NoSuchElementException
-
 base_url = "https://www.imdb.com"
 pop_movie_url = "https://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm"
 top_movie_url = "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
@@ -32,6 +31,8 @@ movie_netflix_url = []
 movie_country = []
 tv_rel_date = []
 
+print("WAITING FOR TOR TO FULLY LOAD - 10 sec")
+time.sleep(10)
 ######################### HEROKU  ################################
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
