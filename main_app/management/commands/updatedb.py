@@ -9,7 +9,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
-import json
 
 # Pesonal Debuging Key
 # ombdAPI="1d54010c"
@@ -241,7 +240,7 @@ def updatedb_popmovies():
         movie_img_url.append(image)
 
         # Getting Trailer LINK
-        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer%20Netflix")
+        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer")
         y_part_1 = youtube.text[(youtube.text.find("/watch?v="))+9:]
         trailer_url_raw =  y_part_1[:y_part_1.find('"')]
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
@@ -339,7 +338,7 @@ def updatedb_topmovies():
         movie_img_url.append(image)
 
         # Getting Trailer LINK
-        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer%20Netflix")
+        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer")
         y_part_1 = youtube.text[(youtube.text.find("/watch?v="))+9:]
         trailer_url_raw =  y_part_1[:y_part_1.find('"')]
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
@@ -451,7 +450,8 @@ def updatedb_toptv():
         movie_img_url.append(image)
 
         # Getting Trailer LINK
-        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer%20Netflix")
+        youtube_search = title+" "+date_for_search
+        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", youtube_search)+"%20Trailer"))
         y_part_1 = youtube.text[(youtube.text.find("/watch?v="))+9:]
         trailer_url_raw =  y_part_1[:y_part_1.find('"')]
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
@@ -559,7 +559,8 @@ def updatedb_poptv():
         movie_img_url.append(image)
 
         # Getting Trailer LINK
-        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer%20Netflix")
+        youtube_search = title+" "+date_for_search
+        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", youtube_search)+"%20Trailer"))
         y_part_1 = youtube.text[(youtube.text.find("/watch?v="))+9:]
         trailer_url_raw =  y_part_1[:y_part_1.find('"')]
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
