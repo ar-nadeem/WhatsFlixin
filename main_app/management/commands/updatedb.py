@@ -9,7 +9,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
+import json
 
+# Pesonal Debuging Key
+# ombdAPI="1d54010c"
+
+#Official WhatsFlixin Key
+ombdAPI="c8d38112"
+
+
+rotten_rate=[]
+meta_rate =[]
+y_trailer_url=[]
 from selenium.common.exceptions import NoSuchElementException
 base_url = "https://www.imdb.com"
 pop_movie_url = "https://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm"
@@ -30,6 +41,8 @@ movie_poster = []
 movie_netflix_url = []
 movie_country = []
 tv_rel_date = []
+
+
 
 print("WAITING FOR TOR TO FULLY LOAD - 10 sec")
 time.sleep(10)
@@ -205,20 +218,33 @@ def updatedb_popmovies():
         desc = soup.find('div', class_="summary_text")
         movie_descs.append(desc.text.strip())
 
-        # Getting Rating
+        # Getting Rating IMDB
         rating = soup.find('span', {'itemprop': 'ratingValue'})
         if rating != None:
             rating = (rating.text.strip()) + "/10"
-
         else:
             rating = "N/A"  # If Rating is not found (For unreleased titles)
         movie_ratings_imdb.append(rating)
+
+        # Getting OMBD DATA
+        omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+
+        # Getting Rotten Rating
+        rotten_rate.append(omdb["tomatoRotten"])
+        # Getting Meta Rating
+        meta_rate.append(omdb["Metascore"])
 
         # Getting Poster
         image = soup.find('div', {'class': 'poster'})
         image = image.find('img').attrs['src']
         image = image[:(image.find("V1_")) + 3] + "SY1000_CR0,0,675,1000_AL_.jpg"
         movie_img_url.append(image)
+
+        # Getting Trailer LINK
+        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer%20Netflix")
+        y_part_1 = youtube.text[(youtube.text.find("/watch?v="))+9:]
+        trailer_url_raw =  y_part_1[:y_part_1.find('"')]
+        y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
         # if movie_rank > 10:
@@ -235,7 +261,8 @@ def updatedb_popmovies():
         imdbPopMovie.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                     description=movie_descs[x],
                                     rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x],
-                                    country=movie_country[x],release_date=(movie_titles[x][movie_titles[x].find("(")+1:movie_titles[x].find(")")]))
+                                    country=movie_country[x],release_date=(movie_titles[x][movie_titles[x].find("(")+1:movie_titles[x].find(")")]),
+                                    rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],trailer_url=y_trailer_url[x])
     print("DB UPDATED")
 
 
@@ -296,11 +323,28 @@ def updatedb_topmovies():
             rating = "N/A"  # If Rating is not found (For unreleased titles)
         movie_ratings_imdb.append(rating)
 
+        # Getting OMBD DATA
+        omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+
+        # Getting Rotten Rating
+        rotten_rate.append(omdb["tomatoRotten"])
+        # Getting Meta Rating
+        meta_rate.append(omdb["Metascore"])
+
+
         # Getting Poster
         image = soup.find('div', {'class': 'poster'})
         image = image.find('img').attrs['src']
         image = image[:(image.find("V1_")) + 3] + "SY1000_CR0,0,675,1000_AL_.jpg"
         movie_img_url.append(image)
+
+        # Getting Trailer LINK
+        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer%20Netflix")
+        y_part_1 = youtube.text[(youtube.text.find("/watch?v="))+9:]
+        trailer_url_raw =  y_part_1[:y_part_1.find('"')]
+        y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
+
+
 
         # For Testing purposes stop scraping after nth movie rank
         # if movie_rank > 10:
@@ -317,7 +361,8 @@ def updatedb_topmovies():
         imdbTopMovie.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                     description=movie_descs[x],
                                     rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x],
-                                    country=movie_country[x],release_date=(movie_titles[x][movie_titles[x].find("(")+1:movie_titles[x].find(")")]))
+                                    country=movie_country[x],release_date=(movie_titles[x][movie_titles[x].find("(")+1:movie_titles[x].find(")")]),
+                                    rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],trailer_url=y_trailer_url[x])
     print("DB UPDATED")
 
 
@@ -390,11 +435,26 @@ def updatedb_toptv():
             rating = "N/A"  # If Rating is not found (For unreleased titles)
         movie_ratings_imdb.append(rating)
 
+        # Getting OMBD DATA
+        omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+
+        # Getting Rotten Rating
+        rotten_rate.append(omdb["tomatoRotten"])
+        # Getting Meta Rating
+        meta_rate.append(omdb["Metascore"])
+
+
         # Getting Poster
         image = soup.find('div', {'class': 'poster'})
         image = image.find('img').attrs['src']
         image = image[:(image.find("V1_")) + 3] + "SY1000_CR0,0,675,1000_AL_.jpg"
         movie_img_url.append(image)
+
+        # Getting Trailer LINK
+        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer%20Netflix")
+        y_part_1 = youtube.text[(youtube.text.find("/watch?v="))+9:]
+        trailer_url_raw =  y_part_1[:y_part_1.find('"')]
+        y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
         # if movie_rank > 10:
@@ -412,7 +472,8 @@ def updatedb_toptv():
         imdbTopTv.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                  description=movie_descs[x],
                                  rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x],
-                                 country=movie_country[x],release_date=(tv_rel_date[x][tv_rel_date[x].find("(")+1:tv_rel_date[x].find(")")]))
+                                 country=movie_country[x],release_date=(tv_rel_date[x][tv_rel_date[x].find("(")+1:tv_rel_date[x].find(")")]),
+                                 rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],trailer_url=y_trailer_url[x])
     print("DB UPDATED")
 
 def updatedb_poptv():
@@ -457,8 +518,6 @@ def updatedb_poptv():
 
 
 
-
-
         except AttributeError:
             print("Title is long finding by another logic")
             title = soup.find('h1', class_="long")
@@ -485,11 +544,25 @@ def updatedb_poptv():
             rating = "N/A"  # If Rating is not found (For unreleased titles)
         movie_ratings_imdb.append(rating)
 
+        # Getting OMBD DATA
+        omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+
+        # Getting Rotten Rating
+        rotten_rate.append(omdb["tomatoRotten"])
+        # Getting Meta Rating
+        meta_rate.append(omdb["Metascore"])
+
         # Getting Poster
         image = soup.find('div', {'class': 'poster'})
         image = image.find('img').attrs['src']
         image = image[:(image.find("V1_")) + 3] + "SY1000_CR0,0,675,1000_AL_.jpg"
         movie_img_url.append(image)
+
+        # Getting Trailer LINK
+        youtube = requests.get("https://www.youtube.com/results?search_query="+(re.sub("[ ]", "%20", title))+"%20Trailer%20Netflix")
+        y_part_1 = youtube.text[(youtube.text.find("/watch?v="))+9:]
+        trailer_url_raw =  y_part_1[:y_part_1.find('"')]
+        y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
         # if movie_rank > 10:
@@ -507,7 +580,8 @@ def updatedb_poptv():
         imdbPopTv.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                  description=movie_descs[x],
                                  rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x],
-                                 country=movie_country[x],release_date=(tv_rel_date[x][tv_rel_date[x].find("(")+1:tv_rel_date[x].find(")")]))
+                                 country=movie_country[x],release_date=(tv_rel_date[x][tv_rel_date[x].find("(")+1:tv_rel_date[x].find(")")]),
+                                 rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],trailer_url=y_trailer_url[x])
     print("DB UPDATED")
 
 

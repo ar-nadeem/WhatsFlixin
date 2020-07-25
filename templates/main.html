@@ -11,7 +11,35 @@
     <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script>
+$(document).ready(function() {
+  // Gets the video src from the data-src on each button
+  var $videoSrc;
+  $(".video-btn").click(function() {
+    $videoSrc = $(this).attr("data-src");
+    console.log("button clicked" + $videoSrc);
+  });
 
+  // when the modal is opened autoplay it
+  $("#trailerModel").on("shown.bs.modal", function(e) {
+    console.log("modal opened" + $videoSrc);
+    // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+    $("#video").attr(
+      "src",
+      $videoSrc + "?amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1"
+    );
+  });
+
+  // stop playing the youtube video when I close the modal
+  $("#trailerModel").on("hide.bs.modal", function(e) {
+    // a poor man's stop video
+    $("#video").attr("src", $videoSrc);
+  });
+
+  // document ready
+});
+
+    </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7YYGY7E714"></script>
