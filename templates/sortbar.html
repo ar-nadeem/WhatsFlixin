@@ -2,12 +2,12 @@
         <div class="container text-white mb-5 pt-1 pb-1 border border-dark rounded-lg  " style="background:rgba(138,0,0,1)" >
 
             <div class="row ">
-                <div class="col mt-2" style="opacity:1;max-width: 80px">
+                <div class="col mt-2 " style="opacity:1;max-width: 77px">
                     <p style="font-size: 13px">Sort by:</p>
             </div>
 
 
-            <div class="col mt-1" style="opacity: 1;max-width: 120px">
+            <div class="col mt-1 " style="opacity: 1;max-width: 100px">
 
                     <div class="dropdown">
                   <button style="font-size: small" class="btn btn-secondary dropdown-toggle" type="button" id="sortbymenu" value="{% if button_disabled == 'Ranking' %}Ranking{%  endif %}{% if button_disabled == 'Release Date' %}Release Date{%  endif %}{% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,7 +24,7 @@
 
                 </div>
 
-                 <div class="col mt-1" style="opacity: 1;max-width: 80px">
+                 <div class="col mt-1 " style="opacity: 1;max-width: 85px">
 
 
                     <button type="button" id="arrow_button" class="btn btn-success btn-sm " value="{% if arrow_pos == 'up' %}up{% else  %}down{%  endif %}">
@@ -36,10 +36,10 @@
 
 
 
-                     <div class="col mt-2" style="opacity:1;max-width: 95px">
+                     <div class="col mt-2 " style="opacity:1;max-width: 82px">
                             <p style="font-size: small">Filter by:</p>
                     </div>
-                        <div class="col mt-1" style="opacity: 1;max-width: 130px">
+                        <div class="col mt-1 " style="opacity: 1;max-width: 100px">
                             <button title="Filter content by your region" data-toggle="tooltip" type="button" id="avail_button" class="btn btn-danger {% if region_filter %}disabled{%  endif %}" value="avail" style="font-size: 13px">Availability</button>
                         </div>
 
