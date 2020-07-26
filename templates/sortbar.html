@@ -1,5 +1,5 @@
 
-        <div class="container text-white mb-5 pt-1 pb-1 border border-dark rounded-lg  " style="background:rgba(138,0,0,1)" >
+        <div class="container text-white mb-5 pt-1 pb-1 border border-dark rounded-lg  " style="background:rgb(117,0,0)" >
             <div class="row ">
             <div class="d-inline-flex">
 
@@ -41,7 +41,7 @@
                             <p style="font-size: small">Filter by:</p>
                     </div>
                         <div class="col mt-1" style="opacity: 1;-ms-flex: 0 0 100px;flex: 0 0 100px;">
-                            <button title="Filter content by your region" data-toggle="tooltip" type="button" id="avail_button" class="btn btn-danger {% if region_filter %}disabled{%  endif %}" value="avail" style="font-size: 13px">Availability</button>
+                            <button title="Filter content by your region" data-toggle="tooltip" type="button" id="avail_button" class="btn btn-danger {% if region_filter %}disabled{%  endif %}" value="avail" style="font-size: 13px;background-color: {% if region_filter %}#808080{%  endif %}">Availability</button>
                         </div>
 
                     </div>
