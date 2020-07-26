@@ -1,47 +1,56 @@
 
-        <div class="container text-white mb-5 pt-1 pb-1 border border-dark rounded-lg  " style="background:rgba(255,0,0,0.5)" >
+        <div class="container text-white mb-5 pt-1 pb-1 border border-dark rounded-lg  " style="background:rgba(138,0,0,1)" >
+
             <div class="row ">
-                <div class="col-xl-1 " style="opacity:1">
-                    <p>Sort by:</p>
-                </div>
+                <div class="col mt-2" style="opacity:1;max-width: 80px">
+                    <p style="font-size: 13px">Sort by:</p>
+            </div>
 
 
-            <div class="col-xl-1  " style="opacity: 1">
+            <div class="col mt-1" style="opacity: 1;max-width: 120px">
 
-
-
-                    <button type="button" id="rank_button" class="btn btn-danger  {% if button_disabled == 'rank' %}disabled{%  endif %}" value="rank">Ranking</button>
-
-                </div>
-                <div class="col-xl-1 " style="opacity: 1">
-
-
-
-                    <button type="button" id="avail_button" class="btn btn-danger  {% if button_disabled == 'avail' %}disabled{%  endif %}" value="avail" >Region</button>
-
-
-                </div>
-                <div class="col-xl-1 " style="opacity: 1">
-
-
-                    <button  type="button" id="reldate_button" class="btn btn-danger  {% if button_disabled == 'reldate' %}disabled{%  endif %}" value="reldate" >Date</button>
+                    <div class="dropdown">
+                  <button style="font-size: small" class="btn btn-secondary dropdown-toggle" type="button" id="sortbymenu" value="{% if button_disabled == 'Ranking' %}Ranking{%  endif %}{% if button_disabled == 'Release Date' %}Release Date{%  endif %}{% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if button_disabled == 'Ranking' %}Ranking{%  endif %}
+                    {% if button_disabled == 'Release Date' %}Release Date{%  endif %}
+                    {% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}
+                  </button>
+                    <div class="dropdown-menu" id="sortby">
+                        <a class="dropdown-item {% if button_disabled == 'Ranking' %}disabled{%  endif %}" href="#">Ranking</a>
+                        <a class="dropdown-item" {% if button_disabled == 'IMDB Rating' %}disabled{%  endif %} href="#">IMDB Rating</a>
+                        <a class="dropdown-item {% if button_disabled == 'Release Date' %}disabled{%  endif %}" href="#">Release Date</a>
+                    </div>
+                    </div>
 
                 </div>
 
-
-                 <div class="col-xl-1 mt-1">
+                 <div class="col mt-1" style="opacity: 1;max-width: 80px">
 
 
                     <button type="button" id="arrow_button" class="btn btn-success btn-sm " value="{% if arrow_pos == 'up' %}up{% else  %}down{%  endif %}">
-                        <span style="color: {% if arrow_pos == 'up' %}white{% else  %} gray {%  endif %}">▲</span>
-                        <span style="color: {% if arrow_pos == 'down' %}white{% else  %} gray  {%  endif %}">▼</span>
+                        <span style="font-size: small;color: {% if arrow_pos == 'up' %}white{% else  %} #2f2f2f {%  endif %}">▲</span>
+                        <span style="font-size: small;color: {% if arrow_pos == 'down' %}white{% else  %} #2f2f2f  {%  endif %}">▼</span>
                     </button>
 
                  </div>
 
 
+
+                     <div class="col mt-2" style="opacity:1;max-width: 95px">
+                            <p style="font-size: small">Filter by:</p>
+                    </div>
+                        <div class="col mt-1" style="opacity: 1;max-width: 130px">
+                            <button title="Filter content by your region" data-toggle="tooltip" type="button" id="avail_button" class="btn btn-danger {% if region_filter %}disabled{%  endif %}" value="avail" style="font-size: 13px">Availability</button>
+                        </div>
+
+
+
+
+
         </div>
         </div>
+
+
 
 
 <script>
@@ -55,21 +64,22 @@
         document.getElementById("overlay").style.display = "none";
     }
 
-    $("#rank_button").on("click", function (e) {
-        loading_on()
+    $("#sortby a").on("click", function (e){
+        loading_on();
         e.preventDefault();
-
+        var txt= ($(this).text());
+        console.log($("#sortbymenu").val());
+        console.log(txt);
         $.ajax({
             type: 'POST',
             data: {
-                button_post: $("#rank_button").val(),
+                button_post: ($(this).text()),
 
+                last_pressed: $("#sortbymenu").val(),
                 arrow: $("#arrow_button").val(),
-                reldate: $("#reldate_button").attr("class"),
                 avail: $("#avail_button").attr("class"),
-                rank: $("#rank_button").attr("class"),
                 csrfmiddlewaretoken: "{{ csrf_token }}",
-
+                country: "{{ country }}",
                 action: 'post'
             },
             success: function (data) {
@@ -84,87 +94,17 @@
 
 
     });
-
-
-    $("#reldate_button").on("click", function (e) {
+        $("#arrow_button").on("click", function (e) {
         loading_on()
         e.preventDefault();
 
         $.ajax({
             type: 'POST',
             data: {
-                button_post: $("#reldate_button").val(),
 
-                arrow: $("#arrow_button").val(),
-                reldate: $("#reldate_button").attr("class"),
-                avail: $("#avail_button").attr("class"),
-                rank: $("#rank_button").attr("class"),
-                csrfmiddlewaretoken: "{{ csrf_token }}",
-                action: 'post'
-            },
-            success: function (data) {
-                loading_off()
-                $("body").html(data);
-                $('.dropdown-toggle').dropdown();
-
-            },
-        });
-        return false;
-    });
-
-    $("#avail_button").on("click", function (e) {
-        loading_on()
-        e.preventDefault();
-        $.getJSON('https://api.ipify.org?format=jsonp&callback=?', function (data) {
-
-            console.log(JSON.stringify(data, null, 2).ip);
-            var ip = jQuery.parseJSON(JSON.stringify(data, null, 2))
-            var ip = ip.ip
-            console.log(ip)
-
-
-            $.getJSON("https://cors-anywhere.herokuapp.com/http://www.geoplugin.net/json.gp?ip=" + ip, function (response) {
-                console.log(response.geoplugin_countryName);
-                $.ajax({
-                    type: 'POST',
-                    data: {
-                        button_post: $("#avail_button").val(),
-
-                        arrow: $("#arrow_button").val(),
-                        reldate: $("#reldate_button").attr("class"),
-                        avail: $("#avail_button").attr("class"),
-                        rank: $("#rank_button").attr("class"),
-                        country: response.geoplugin_countryName,
-                        csrfmiddlewaretoken: "{{ csrf_token }}",
-
-                        action: 'post'
-                    },
-                    success: function (data) {
-                        loading_off()
-
-                $("body").html(data);
-                $('.dropdown-toggle').dropdown();
-
-
-                    },
-                });
-            });
-        });
-        return false;
-
-    });
-
-    $("#arrow_button").on("click", function (e) {
-        loading_on()
-        e.preventDefault();
-
-        $.ajax({
-            type: 'POST',
-            data: {
                 arrow_post: $("#arrow_button").val(),
-                reldate: $("#reldate_button").attr("class"),
+                last_pressed: $("#sortbymenu").val(),
                 avail: $("#avail_button").attr("class"),
-                rank: $("#rank_button").attr("class"),
                 csrfmiddlewaretoken: "{{ csrf_token }}",
                 country: "{{ country }}",
                 action: 'post',
@@ -182,6 +122,86 @@
 
 
     });
+
+            $("#avail_button").on("click", function (e) {
+        loading_on()
+        e.preventDefault();
+        $.getJSON('https://api.ipify.org?format=jsonp&callback=?', function (data) {
+
+            console.log(JSON.stringify(data, null, 2).ip);
+            var ip = jQuery.parseJSON(JSON.stringify(data, null, 2))
+            var ip = ip.ip
+            console.log(ip)
+
+
+            $.getJSON("https://cors-anywhere.herokuapp.com/http://www.geoplugin.net/json.gp?ip=" + ip, function (response) {
+                console.log(response.geoplugin_countryName);
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        button_post: $("#avail_button").val(),
+                        last_pressed: $("#sortbymenu").val(),
+
+                        avail: $("#avail_button").attr("class"),
+
+
+
+                        country: response.geoplugin_countryName,
+                        csrfmiddlewaretoken: "{{ csrf_token }}",
+
+                        action: 'post'
+                    },
+                    success: function (data) {
+                        loading_off();
+
+                        $("body").html(data);
+
+                        $('.dropdown-toggle').dropdown();
+
+
+                    },
+                });
+            });
+        });
+        return false;
+
+    });
+    {#$("#rank_button").on("click", function (e) {#}
+    {#    loading_on()#}
+    {#    e.preventDefault();#}
+    {##}
+    {#    $.ajax({#}
+    {#        type: 'POST',#}
+    {#        data: {#}
+    {#            button_post: $("#rank_button").val(),#}
+    {##}
+    {#            arrow: $("#arrow_button").val(),#}
+    {#            reldate: $("#reldate_button").attr("class"),#}
+    {#            avail: $("#avail_button").attr("class"),#}
+    {#            rank: $("#rank_button").attr("class"),#}
+    {#            csrfmiddlewaretoken: "{{ csrf_token }}",#}
+    {##}
+    {#            action: 'post'#}
+    {#        },#}
+    {#        success: function (data) {#}
+    {#            loading_off()#}
+    {#            $("body").html(data);#}
+    {#            $('.dropdown-toggle').dropdown();#}
+    {##}
+    {##}
+    {#        },#}
+    {#    });#}
+    {#    return false;#}
+    {##}
+    {##}
+    {#});#}
+
+
+
+
+
+
+
 
 
 

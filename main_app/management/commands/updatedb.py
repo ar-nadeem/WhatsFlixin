@@ -40,6 +40,7 @@ movie_poster = []
 movie_netflix_url = []
 movie_country = []
 tv_rel_date = []
+imdb_url = []
 
 
 
@@ -220,18 +221,20 @@ def updatedb_popmovies():
         # Getting Rating IMDB
         rating = soup.find('span', {'itemprop': 'ratingValue'})
         if rating != None:
-            rating = (rating.text.strip()) + "/10"
+            rating = (rating.text.strip())
         else:
-            rating = "N/A"  # If Rating is not found (For unreleased titles)
+            rating = "0.0"  # If Rating is not found (For unreleased titles)
         movie_ratings_imdb.append(rating)
 
-        # Getting OMBD DATA
-        omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
 
-        # Getting Rotten Rating
-        rotten_rate.append(omdb["tomatoRotten"])
-        # Getting Meta Rating
-        meta_rate.append(omdb["Metascore"])
+        imdb_url.append("https://www.imdb.com/title/"+(urls[urls.find("/tt")+1:urls.find("?")]))
+        # # Getting OMBD DATA
+        # omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+        #
+        # # Getting Rotten Rating
+        # rotten_rate.append(omdb["tomatoRotten"])
+        # # Getting Meta Rating
+        # meta_rate.append(omdb["Metascore"])
 
         # Getting Poster
         image = soup.find('div', {'class': 'poster'})
@@ -246,10 +249,10 @@ def updatedb_popmovies():
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 10:
-        #     print("DONE EXITING AT 10")
-        #     driver.quit()
-        #     break
+        if movie_rank > 10:
+            print("DONE EXITING AT 10")
+            driver.quit()
+            break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -260,8 +263,9 @@ def updatedb_popmovies():
         imdbPopMovie.objects.create(poster_link=movie_img_url[x], title=movie_titles[x],
                                     description=movie_descs[x],
                                     rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x],
-                                    country=movie_country[x],release_date=(movie_titles[x][movie_titles[x].find("(")+1:movie_titles[x].find(")")]),
-                                    rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],trailer_url=y_trailer_url[x])
+                                    country=movie_country[x],release_date=(movie_titles[x][movie_titles[x].find("(")+1:movie_titles[x].find(")")]),trailer_url=y_trailer_url[x],
+                                    imdb_url=imdb_url[x])
+                                    # rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],)
     print("DB UPDATED")
 
 
@@ -316,19 +320,22 @@ def updatedb_topmovies():
         # Getting Rating
         rating = soup.find('span', {'itemprop': 'ratingValue'})
         if rating != None:
-            rating = (rating.text.strip()) + "/10"
+            rating = (rating.text.strip())
 
         else:
-            rating = "N/A"  # If Rating is not found (For unreleased titles)
+            rating = "0.0"  # If Rating is not found (For unreleased titles)
         movie_ratings_imdb.append(rating)
 
-        # Getting OMBD DATA
-        omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
 
-        # Getting Rotten Rating
-        rotten_rate.append(omdb["tomatoRotten"])
-        # Getting Meta Rating
-        meta_rate.append(omdb["Metascore"])
+        imdb_url.append("https://www.imdb.com/title/"+(urls[urls.find("/tt")+1:urls.find("?")]))
+
+        # # Getting OMBD DATA
+        # omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+        #
+        # # Getting Rotten Rating
+        # rotten_rate.append(omdb["tomatoRotten"])
+        # # Getting Meta Rating
+        # meta_rate.append(omdb["Metascore"])
 
 
         # Getting Poster
@@ -346,10 +353,10 @@ def updatedb_topmovies():
 
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 10:
-        #     print("DONE EXITING AT 10")
-        #     driver.quit()
-        #     break
+        if movie_rank > 10:
+            print("DONE EXITING AT 10")
+            driver.quit()
+            break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -361,7 +368,7 @@ def updatedb_topmovies():
                                     description=movie_descs[x],
                                     rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x],
                                     country=movie_country[x],release_date=(movie_titles[x][movie_titles[x].find("(")+1:movie_titles[x].find(")")]),
-                                    rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],trailer_url=y_trailer_url[x])
+                                    trailer_url=y_trailer_url[x],imdb_url=imdb_url[x])
     print("DB UPDATED")
 
 
@@ -428,19 +435,21 @@ def updatedb_toptv():
         # Getting Rating
         rating = soup.find('span', {'itemprop': 'ratingValue'})
         if rating != None:
-            rating = (rating.text.strip()) + "/10"
+            rating = (rating.text.strip())
 
         else:
-            rating = "N/A"  # If Rating is not found (For unreleased titles)
+            rating = "0.0"  # If Rating is not found (For unreleased titles)
         movie_ratings_imdb.append(rating)
 
-        # Getting OMBD DATA
-        omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+        imdb_url.append("https://www.imdb.com/title/"+(urls[urls.find("/tt")+1:urls.find("?")]))
 
-        # Getting Rotten Rating
-        rotten_rate.append(omdb["tomatoRotten"])
-        # Getting Meta Rating
-        meta_rate.append(omdb["Metascore"])
+        # # Getting OMBD DATA
+        # omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+        #
+        # # Getting Rotten Rating
+        # rotten_rate.append(omdb["tomatoRotten"])
+        # # Getting Meta Rating
+        # meta_rate.append(omdb["Metascore"])
 
 
         # Getting Poster
@@ -457,10 +466,10 @@ def updatedb_toptv():
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 10:
-        #     print("DONE EXITING AT 10")
-        #     driver.quit()
-        #     break
+        if movie_rank > 10:
+            print("DONE EXITING AT 10")
+            driver.quit()
+            break
 
 
     delet.delete()  # Deleting Previous DB to save space
@@ -473,7 +482,7 @@ def updatedb_toptv():
                                  description=movie_descs[x],
                                  rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x],
                                  country=movie_country[x],release_date=(tv_rel_date[x][tv_rel_date[x].find("(")+1:tv_rel_date[x].find(")")]),
-                                 rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],trailer_url=y_trailer_url[x])
+                                 trailer_url=y_trailer_url[x],imdb_url=imdb_url[x])
     print("DB UPDATED")
 
 def updatedb_poptv():
@@ -538,19 +547,20 @@ def updatedb_poptv():
         # Getting Rating
         rating = soup.find('span', {'itemprop': 'ratingValue'})
         if rating != None:
-            rating = (rating.text.strip()) + "/10"
+            rating = (rating.text.strip())
 
         else:
-            rating = "N/A"  # If Rating is not found (For unreleased titles)
+            rating = "0.0"  # If Rating is not found (For unreleased titles)
         movie_ratings_imdb.append(rating)
 
-        # Getting OMBD DATA
-        omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
-
-        # Getting Rotten Rating
-        rotten_rate.append(omdb["tomatoRotten"])
-        # Getting Meta Rating
-        meta_rate.append(omdb["Metascore"])
+        imdb_url.append("https://www.imdb.com/title/"+(urls[urls.find("/tt")+1:urls.find("?")]))
+        # # Getting OMBD DATA
+        # omdb = requests.get("http://www.omdbapi.com/?i="+(urls[urls.find("/tt")+1:urls.find("?")])+"&y=&plot=short&tomatoes=true&r=json&apikey="+ombdAPI).json()
+        #
+        # # Getting Rotten Rating
+        # rotten_rate.append(omdb["tomatoRotten"])
+        # # Getting Meta Rating
+        # meta_rate.append(omdb["Metascore"])
 
         # Getting Poster
         image = soup.find('div', {'class': 'poster'})
@@ -566,10 +576,10 @@ def updatedb_poptv():
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
-        # if movie_rank > 10:
-        #     print("DONE EXITING AT 10")
-        #     driver.quit()
-        #     break
+        if movie_rank > 10:
+            print("DONE EXITING AT 10")
+            driver.quit()
+            break
 
 
     delet.delete()  # Deleting Previous DB to save space
@@ -582,7 +592,7 @@ def updatedb_poptv():
                                  description=movie_descs[x],
                                  rank=x + 1, imdb_rating=movie_ratings_imdb[x], netflix_url=movie_netflix_url[x],
                                  country=movie_country[x],release_date=(tv_rel_date[x][tv_rel_date[x].find("(")+1:tv_rel_date[x].find(")")]),
-                                 rotten_rating=rotten_rate[x],meta_rating=meta_rate[x],trailer_url=y_trailer_url[x])
+                                 trailer_url=y_trailer_url[x],imdb_url=imdb_url[x])
     print("DB UPDATED")
 
 

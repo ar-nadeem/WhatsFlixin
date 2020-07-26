@@ -6,18 +6,34 @@ from .models import imdbPopMovie, imdbTopMovie, imdbPopTv, imdbTopTv
 
 def imdbPopMovieView(request):
     arrow ="up"
-    button_pressed ="rank"
+    button_pressed = "Ranking"
+    last_pressed = "Ranking"
     only_arrow_post = False
     country = "N/A"
+    region_filter = False
+    double_pressed = False
 
-
-    imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('rank')
+    if button_pressed == "Ranking":
+        imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('rank')
 
     if request.POST.get('action') == 'post':
-
+        last_pressed = request.POST['last_pressed']
         try:
-            button_post = request.POST['button_post']
-            button_pressed = button_post
+            button_pressed = request.POST['button_post']
+            if button_pressed == "IMDB Rating":
+                arrow = "down"
+            if button_pressed == "avail":
+                if button_pressed == "IMDB Rating":
+                    arrow = "down"
+                if request.POST['avail'].find("disabled") > 0:
+                    double_pressed = True
+                    region_filter = False
+                    button_pressed = last_pressed
+                else:
+                    region_filter = True
+                    button_pressed = last_pressed
+
+            print(button_pressed)
 
         except :
             only_arrow_post = True
@@ -26,30 +42,43 @@ def imdbPopMovieView(request):
                 arrow = "down"
             else:
                 arrow = "up"
+            try:
+                if request.POST['avail'].find("disabled") > 0:
+                    region_filter = True
+                    button_pressed = last_pressed
+                else:
+                    region_filter = False
+            except:
+                pass
+
+
+        if request.POST['avail'].find("disabled") > 0 and double_pressed != True:
+            region_filter = True
 
 
 
-        if only_arrow_post:
-            if request.POST['rank'].find("disabled") > -1:
-                button_pressed = "rank"
-            if request.POST['avail'].find("disabled") > -1:
-                button_pressed = "avail"
-            if request.POST['reldate'].find("disabled") > -1:
-                button_pressed = "reldate"
+        if only_arrow_post :
+            button_pressed = last_pressed
 
-        if button_pressed == "reldate":
+        if button_pressed == "Release Date":
             if arrow == "up":
                 imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('release_date')
             else:
                 imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('-release_date')
 
-        if button_pressed == "rank":
+        if button_pressed == "Ranking":
             if arrow == "up":
                 imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('rank')
             else:
                 imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('-rank')
 
-        if button_pressed == "avail":
+        if button_pressed == "IMDB Rating":
+            if arrow == "up":
+                imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('imdb_rating')
+            else:
+                imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('-imdb_rating')
+
+        if region_filter:
             country = request.POST['country']
             if country == "Pakistan":
                 country = "India"
@@ -63,13 +92,24 @@ def imdbPopMovieView(request):
                     wanted_items.add(models.pk)
                 else:
                     not_wanted_items.add(models.pk)
-            if arrow == "up":
-                imdb_Pop_Movie_DB= imdbPopMovie.objects.filter(pk__in=wanted_items)
-            else:
-                imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=not_wanted_items)
 
+            if button_pressed == "Release Date":
+                if arrow == "up":
+                    imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=wanted_items).order_by('release_date')
+                else:
+                    imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=wanted_items).order_by('-release_date')
 
+            if button_pressed == "Ranking":
+                if arrow == "up":
+                    imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=wanted_items).order_by('rank')
+                else:
+                    imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=wanted_items).order_by('-rank')
 
+            if button_pressed == "IMDB Rating":
+                if arrow == "up":
+                    imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=wanted_items).order_by('imdb_rating')
+                else:
+                    imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=wanted_items).order_by('-imdb_rating')
 
 
     stuff_for_frontend = {
@@ -78,6 +118,7 @@ def imdbPopMovieView(request):
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
         'country': country,
+        'region_filter': region_filter,
 
     }
 
@@ -86,74 +127,117 @@ def imdbPopMovieView(request):
 
 
 def imdbTopMovieView(request):
-    arrow ="up"
-    button_pressed ="rank"
+    arrow = "up"
+    button_pressed = "Ranking"
+    last_pressed = "Ranking"
     only_arrow_post = False
     country = "N/A"
+    region_filter = False
+    double_pressed = False
 
-    imdb_Top_Movie_DB = imdbTopMovie.objects.all().order_by('rank')
+    if button_pressed == "Ranking":
+        imdb_Top_Movies = imdbTopMovie.objects.all().order_by('rank')
 
     if request.POST.get('action') == 'post':
-
+        last_pressed = request.POST['last_pressed']
         try:
-            button_post = request.POST['button_post']
-            button_pressed = button_post
+            button_pressed = request.POST['button_post']
+            if button_pressed == "IMDB Rating":
+                arrow = "down"
+            if button_pressed == "avail":
+                if button_pressed == "IMDB Rating":
+                    arrow = "down"
+                if request.POST['avail'].find("disabled") > 0:
+                    double_pressed = True
+                    region_filter = False
+                    button_pressed = last_pressed
+                else:
+                    region_filter = True
+                    button_pressed = last_pressed
 
-        except :
+            print(button_pressed)
+
+        except:
             only_arrow_post = True
             arrow_post = request.POST['arrow_post']
             if arrow_post == "up":
                 arrow = "down"
             else:
                 arrow = "up"
+            try:
+                if request.POST['avail'].find("disabled") > 0:
+                    region_filter = True
+                    button_pressed = last_pressed
+                else:
+                    region_filter = False
+            except:
+                pass
 
-
+        if request.POST['avail'].find("disabled") > 0 and double_pressed != True:
+            region_filter = True
 
         if only_arrow_post:
-            if request.POST['rank'].find("disabled") > -1:
-                button_pressed = "rank"
-            if request.POST['avail'].find("disabled") > -1:
-                button_pressed = "avail"
-            if request.POST['reldate'].find("disabled") > -1:
-                button_pressed = "reldate"
+            button_pressed = last_pressed
 
-    if button_pressed == "reldate":
-        if arrow == "up":
-            imdb_Top_Movie_DB = imdbTopMovie.objects.all().order_by('release_date')
-        else:
-            imdb_Top_Movie_DB = imdbTopMovie.objects.all().order_by('-release_date')
-
-    if button_pressed == "rank":
-        if arrow == "up":
-            imdb_Top_Movie_DB = imdbTopMovie.objects.all().order_by('rank')
-        else:
-            imdb_Top_Movie_DB = imdbTopMovie.objects.all().order_by('-rank')
-
-    if button_pressed == "avail":
-        country = request.POST['country']
-        if country == "Pakistan":
-            country = "India"
-
-        print(country)
-        imdb_Top_Movie_DB = imdbTopMovie.objects.all().order_by('rank')
-        wanted_items = set()
-        not_wanted_items = set()
-        for models in imdb_Top_Movie_DB:
-            if models.country.find(country) >= 0:
-                wanted_items.add(models.pk)
+        if button_pressed == "Release Date":
+            if arrow == "up":
+                imdb_Top_Movies = imdbTopMovie.objects.all().order_by('release_date')
             else:
-                not_wanted_items.add(models.pk)
-        if arrow == "up":
-            imdb_Top_Movie_DB = imdbTopMovie.objects.filter(pk__in=wanted_items)
-        else:
-            imdb_Top_Movie_DB = imdbTopMovie.objects.filter(pk__in=not_wanted_items)
+                imdb_Top_Movies = imdbTopMovie.objects.all().order_by('-release_date')
+
+        if button_pressed == "Ranking":
+            if arrow == "up":
+                imdb_Top_Movies = imdbTopMovie.objects.all().order_by('rank')
+            else:
+                imdb_Top_Movies = imdbTopMovie.objects.all().order_by('-rank')
+
+        if button_pressed == "IMDB Rating":
+            if arrow == "up":
+                imdb_Top_Movies = imdbTopMovie.objects.all().order_by('imdb_rating')
+            else:
+                imdb_Top_Movies = imdbTopMovie.objects.all().order_by('-imdb_rating')
+
+        if region_filter:
+            country = request.POST['country']
+            if country == "Pakistan":
+                country = "India"
+
+            print(country)
+            imdb_Top_Movies = imdbTopMovie.objects.all().order_by('rank')
+            wanted_items = set()
+            not_wanted_items = set()
+            for models in imdb_Top_Movies:
+                if models.country.find(country) >= 0:
+                    wanted_items.add(models.pk)
+                else:
+                    not_wanted_items.add(models.pk)
+
+            if button_pressed == "Release Date":
+                if arrow == "up":
+                    imdb_Top_Movies = imdbTopMovie.objects.filter(pk__in=wanted_items).order_by('release_date')
+                else:
+                    imdb_Top_Movies = imdbTopMovie.objects.filter(pk__in=wanted_items).order_by('-release_date')
+
+            if button_pressed == "Ranking":
+                if arrow == "up":
+                    imdb_Top_Movies = imdbTopMovie.objects.filter(pk__in=wanted_items).order_by('rank')
+                else:
+                    imdb_Top_Movies = imdbTopMovie.objects.filter(pk__in=wanted_items).order_by('-rank')
+
+            if button_pressed == "IMDB Rating":
+                if arrow == "up":
+                    imdb_Top_Movies = imdbTopMovie.objects.filter(pk__in=wanted_items).order_by('imdb_rating')
+                else:
+                    imdb_Top_Movies = imdbTopMovie.objects.filter(pk__in=wanted_items).order_by('-imdb_rating')
 
     stuff_for_frontend = {
-        'imdb_Top_Movies': imdb_Top_Movie_DB,
+        'imdb_Top_Movies': imdb_Top_Movies,
         'nbar': 'topm',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
-        'country':country,
+        'country': country,
+        'region_filter': region_filter,
+
     }
 
     return render(request, 'topmovies.html', stuff_for_frontend)
@@ -163,74 +247,116 @@ def imdbTopMovieView(request):
 ############################### TV #########################################
 
 def imdbPopTvView(request):
-    arrow ="up"
-    button_pressed ="rank"
+    arrow = "up"
+    button_pressed = "Ranking"
+    last_pressed = "Ranking"
     only_arrow_post = False
     country = "N/A"
+    region_filter = False
+    double_pressed = False
 
-    imdb_Pop_Tv_DB = imdbPopTv.objects.all().order_by('rank')
-
+    if button_pressed == "Ranking":
+        imdb_Pop_Tv = imdbPopTv.objects.all().order_by('rank')
 
     if request.POST.get('action') == 'post':
-
+        last_pressed = request.POST['last_pressed']
         try:
-            button_post = request.POST['button_post']
-            button_pressed = button_post
+            button_pressed = request.POST['button_post']
+            if button_pressed == "IMDB Rating":
+                arrow = "down"
+            if button_pressed == "avail":
+                if button_pressed == "IMDB Rating":
+                    arrow = "down"
+                if request.POST['avail'].find("disabled") > 0:
+                    double_pressed = True
+                    region_filter = False
+                    button_pressed = last_pressed
+                else:
+                    region_filter = True
+                    button_pressed = last_pressed
 
-        except :
+            print(button_pressed)
+
+        except:
             only_arrow_post = True
             arrow_post = request.POST['arrow_post']
             if arrow_post == "up":
                 arrow = "down"
             else:
                 arrow = "up"
+            try:
+                if request.POST['avail'].find("disabled") > 0:
+                    region_filter = True
+                    button_pressed = last_pressed
+                else:
+                    region_filter = False
+            except:
+                pass
 
-
+        if request.POST['avail'].find("disabled") > 0 and double_pressed != True:
+            region_filter = True
 
         if only_arrow_post:
-            if request.POST['rank'].find("disabled") > -1:
-                button_pressed = "rank"
-            if request.POST['avail'].find("disabled") > -1:
-                button_pressed = "avail"
-            if request.POST['reldate'].find("disabled") > -1:
-                button_pressed = "reldate"
-    if button_pressed == "reldate":
-        if arrow == "up":
-            imdb_Pop_Tv_DB = imdbPopTv.objects.all().order_by('release_date')
-        else:
-            imdb_Pop_Tv_DB = imdbPopTv.objects.all().order_by('-release_date')
+            button_pressed = last_pressed
 
-    if button_pressed == "rank":
-        if arrow == "up":
-            imdb_Pop_Tv_DB = imdbPopTv.objects.all().order_by('rank')
-        else:
-            imdb_Pop_Tv_DB = imdbPopTv.objects.all().order_by('-rank')
-
-    if button_pressed == "avail":
-        country = request.POST['country']
-        if country == "Pakistan":
-            country = "India"
-
-        print(country)
-        imdb_Pop_Tv_DB = imdbPopTv.objects.all().order_by('rank')
-        wanted_items = set()
-        not_wanted_items = set()
-        for models in imdb_Pop_Tv_DB:
-            if models.country.find(country) >= 0:
-                wanted_items.add(models.pk)
+        if button_pressed == "Release Date":
+            if arrow == "up":
+                imdb_Pop_Tv = imdbPopTv.objects.all().order_by('release_date')
             else:
-                not_wanted_items.add(models.pk)
-        if arrow == "up":
-            imdb_Pop_Tv_DB = imdbPopTv.objects.filter(pk__in=wanted_items)
-        else:
-            imdb_Pop_Tv_DB = imdbPopTv.objects.filter(pk__in=not_wanted_items)
+                imdb_Pop_Tv = imdbPopTv.objects.all().order_by('-release_date')
+
+        if button_pressed == "Ranking":
+            if arrow == "up":
+                imdb_Pop_Tv = imdbPopTv.objects.all().order_by('rank')
+            else:
+                imdb_Pop_Tv = imdbPopTv.objects.all().order_by('-rank')
+
+        if button_pressed == "IMDB Rating":
+            if arrow == "up":
+                imdb_Pop_Tv = imdbPopTv.objects.all().order_by('imdb_rating')
+            else:
+                imdb_Pop_Tv = imdbPopTv.objects.all().order_by('-imdb_rating')
+
+        if region_filter:
+            country = request.POST['country']
+            if country == "Pakistan":
+                country = "India"
+
+            print(country)
+            imdb_Pop_Tv = imdbPopTv.objects.all().order_by('rank')
+            wanted_items = set()
+            not_wanted_items = set()
+            for models in imdb_Pop_Tv:
+                if models.country.find(country) >= 0:
+                    wanted_items.add(models.pk)
+                else:
+                    not_wanted_items.add(models.pk)
+
+            if button_pressed == "Release Date":
+                if arrow == "up":
+                    imdb_Pop_Tv = imdbPopTv.objects.filter(pk__in=wanted_items).order_by('release_date')
+                else:
+                    imdb_Pop_Tv = imdbPopTv.objects.filter(pk__in=wanted_items).order_by('-release_date')
+
+            if button_pressed == "Ranking":
+                if arrow == "up":
+                    imdb_Pop_Tv = imdbPopTv.objects.filter(pk__in=wanted_items).order_by('rank')
+                else:
+                    imdb_Pop_Tv = imdbPopTv.objects.filter(pk__in=wanted_items).order_by('-rank')
+
+            if button_pressed == "IMDB Rating":
+                if arrow == "up":
+                    imdb_Pop_Tv = imdbPopTv.objects.filter(pk__in=wanted_items).order_by('imdb_rating')
+                else:
+                    imdb_Pop_Tv = imdbPopTv.objects.filter(pk__in=wanted_items).order_by('-imdb_rating')
 
     stuff_for_frontend = {
-        'imdb_Pop_Tv': imdb_Pop_Tv_DB,
+        'imdb_Pop_Tv': imdb_Pop_Tv,
         'nbar': 'poptv',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
-        'country':country,
+        'country': country,
+        'region_filter': region_filter,
 
     }
 
@@ -240,76 +366,117 @@ def imdbPopTvView(request):
 
 
 def imdbTopTvView(request):
-    arrow ="up"
-    button_pressed ="rank"
+    arrow = "up"
+    button_pressed = "Ranking"
+    last_pressed = "Ranking"
     only_arrow_post = False
     country = "N/A"
+    region_filter = False
+    double_pressed = False
 
-    imdb_Top_Tv_DB = imdbTopTv.objects.all().order_by('rank')
-
+    if button_pressed == "Ranking":
+        imdb_Top_Tv = imdbTopTv.objects.all().order_by('rank')
 
     if request.POST.get('action') == 'post':
-
+        last_pressed = request.POST['last_pressed']
         try:
-            button_post = request.POST['button_post']
-            button_pressed = button_post
+            button_pressed = request.POST['button_post']
+            if button_pressed == "IMDB Rating":
+                arrow = "down"
+            if button_pressed == "avail":
+                if button_pressed == "IMDB Rating":
+                    arrow = "down"
+                if request.POST['avail'].find("disabled") > 0:
+                    double_pressed = True
+                    region_filter = False
+                    button_pressed = last_pressed
+                else:
+                    region_filter = True
+                    button_pressed = last_pressed
 
-        except :
+            print(button_pressed)
+
+        except:
             only_arrow_post = True
             arrow_post = request.POST['arrow_post']
             if arrow_post == "up":
                 arrow = "down"
             else:
                 arrow = "up"
+            try:
+                if request.POST['avail'].find("disabled") > 0:
+                    region_filter = True
+                    button_pressed = last_pressed
+                else:
+                    region_filter = False
+            except:
+                pass
 
-
+        if request.POST['avail'].find("disabled") > 0 and double_pressed != True:
+            region_filter = True
 
         if only_arrow_post:
-            if request.POST['rank'].find("disabled") > -1:
-                button_pressed = "rank"
-            if request.POST['avail'].find("disabled") > -1:
-                button_pressed = "avail"
-            if request.POST['reldate'].find("disabled") > -1:
-                button_pressed = "reldate"
+            button_pressed = last_pressed
 
-    if button_pressed == "reldate":
-        if arrow == "up":
-            imdb_Top_Tv_DB = imdbTopTv.objects.all().order_by('release_date')
-        else:
-            imdb_Top_Tv_DB = imdbTopTv.objects.all().order_by('-release_date')
-
-    if button_pressed == "rank":
-        if arrow == "up":
-            imdb_Top_Tv_DB = imdbTopTv.objects.all().order_by('rank')
-        else:
-            imdb_Top_Tv_DB = imdbTopTv.objects.all().order_by('-rank')
-
-    if button_pressed == "avail":
-        country = request.POST['country']
-        if country == "Pakistan":
-            country = "India"
-
-        print(country)
-        imdb_Top_Tv_DB = imdbTopTv.objects.all().order_by('rank')
-        wanted_items = set()
-        not_wanted_items = set()
-        for models in imdb_Top_Tv_DB:
-            if models.country.find(country) >= 0:
-                wanted_items.add(models.pk)
+        if button_pressed == "Release Date":
+            if arrow == "up":
+                imdb_Top_Tv = imdbTopTv.objects.all().order_by('release_date')
             else:
-                not_wanted_items.add(models.pk)
-        if arrow == "up":
-            imdb_Top_Tv_DB = imdbTopTv.objects.filter(pk__in=wanted_items)
-        else:
-            imdb_Top_Tv_DB = imdbTopTv.objects.filter(pk__in=not_wanted_items)
+                imdb_Top_Tv = imdbTopTv.objects.all().order_by('-release_date')
 
+        if button_pressed == "Ranking":
+            if arrow == "up":
+                imdb_Top_Tv = imdbTopTv.objects.all().order_by('rank')
+            else:
+                imdb_Top_Tv = imdbTopTv.objects.all().order_by('-rank')
+
+        if button_pressed == "IMDB Rating":
+            if arrow == "up":
+                imdb_Top_Tv = imdbTopTv.objects.all().order_by('imdb_rating')
+            else:
+                imdb_Top_Tv = imdbTopTv.objects.all().order_by('-imdb_rating')
+
+        if region_filter:
+            country = request.POST['country']
+            if country == "Pakistan":
+                country = "India"
+
+            print(country)
+            imdb_Top_Tv = imdbTopTv.objects.all().order_by('rank')
+            wanted_items = set()
+            not_wanted_items = set()
+            for models in imdbTopTv:
+                if models.country.find(country) >= 0:
+                    wanted_items.add(models.pk)
+                else:
+                    not_wanted_items.add(models.pk)
+
+            if button_pressed == "Release Date":
+                if arrow == "up":
+                    imdb_Top_Tv = imdbTopTv.objects.filter(pk__in=wanted_items).order_by('release_date')
+                else:
+                    imdb_Top_Tv = imdbTopTv.objects.filter(pk__in=wanted_items).order_by('-release_date')
+
+            if button_pressed == "Ranking":
+                if arrow == "up":
+                    imdb_Top_Tv = imdbTopTv.objects.filter(pk__in=wanted_items).order_by('rank')
+                else:
+                    imdb_Top_Tv = imdbTopTv.objects.filter(pk__in=wanted_items).order_by('-rank')
+
+            if button_pressed == "IMDB Rating":
+                if arrow == "up":
+                    imdb_Top_Tv = imdbTopTv.objects.filter(pk__in=wanted_items).order_by('imdb_rating')
+                else:
+                    imdb_Top_Tv = imdbTopTv.objects.filter(pk__in=wanted_items).order_by('-imdb_rating')
 
     stuff_for_frontend = {
-        'imdb_Top_Tv': imdb_Top_Tv_DB,
-        'nbar': 'toptv',
+        'imdb_Top_Tv': imdb_Top_Tv,
+        'nbar': 'topm',
         'arrow_pos': arrow,
         'button_disabled': button_pressed,
-        'country':country,
+        'country': country,
+        'region_filter': region_filter,
+
     }
 
     return render(request, 'toptv.html', stuff_for_frontend)
