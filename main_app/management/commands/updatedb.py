@@ -249,10 +249,10 @@ def updatedb_popmovies():
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 10:
-            print("DONE EXITING AT 10")
-            driver.quit()
-            break
+        # if movie_rank > 10:
+        #     print("DONE EXITING AT 10")
+        #     driver.quit()
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -353,10 +353,10 @@ def updatedb_topmovies():
 
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 10:
-            print("DONE EXITING AT 10")
-            driver.quit()
-            break
+        # if movie_rank > 10:
+        #     print("DONE EXITING AT 10")
+        #     driver.quit()
+        #     break
 
     delet.delete()  # Deleting Previous DB to save space
 
@@ -466,10 +466,10 @@ def updatedb_toptv():
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 10:
-            print("DONE EXITING AT 10")
-            driver.quit()
-            break
+        # if movie_rank > 10:
+        #     print("DONE EXITING AT 10")
+        #     driver.quit()
+        #     break
 
 
     delet.delete()  # Deleting Previous DB to save space
@@ -576,10 +576,10 @@ def updatedb_poptv():
         y_trailer_url.append("https://www.youtube.com/embed/"+trailer_url_raw)
 
         # For Testing purposes stop scraping after nth movie rank
-        if movie_rank > 10:
-            print("DONE EXITING AT 10")
-            driver.quit()
-            break
+        # if movie_rank > 10:
+        #     print("DONE EXITING AT 10")
+        #     driver.quit()
+        #     break
 
 
     delet.delete()  # Deleting Previous DB to save space
