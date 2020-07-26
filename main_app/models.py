@@ -14,6 +14,9 @@ class imdbPopMovie(models.Model):
     country = models.CharField(max_length=750, default="#")
     release_date = models.IntegerField(blank=True, null=True)
     trailer_url = models.CharField(max_length=750, default="#")
+    imdb_url = models.CharField(max_length=500, default="#")
+    rotten_url = models.CharField(max_length=500, default="#")
+    meta_url = models.CharField(max_length=500, default="#")
 
     def __str__(self):
         return '{} - {}'.format(self.rank, self.title)
@@ -31,6 +34,9 @@ class imdbTopMovie(models.Model):
     rotten_rating = models.CharField(max_length=10, default="#")
     meta_rating = models.CharField(max_length=10, default="#")
     netflix_url = models.CharField(max_length=500, default="#")
+    imdb_url = models.CharField(max_length=500, default="#")
+    rotten_url = models.CharField(max_length=500, default="#")
+    meta_url = models.CharField(max_length=500, default="#")
     country = models.CharField(max_length=750, default="#")
     release_date = models.IntegerField(blank=True, null=True)
     trailer_url = models.CharField(max_length=750, default="#")
@@ -54,6 +60,9 @@ class imdbPopTv(models.Model):
     country = models.CharField(max_length=750, default="#")
     release_date = models.IntegerField(blank=True, null=True)
     trailer_url = models.CharField(max_length=750, default="#")
+    imdb_url = models.CharField(max_length=500, default="#")
+    rotten_url = models.CharField(max_length=500, default="#")
+    meta_url = models.CharField(max_length=500, default="#")
 
     def __str__(self):
         return '{} - {}'.format(self.rank, self.title)
@@ -74,6 +83,9 @@ class imdbTopTv(models.Model):
     country = models.CharField(max_length=750, default="#")
     release_date = models.IntegerField(blank=True, null=True)
     trailer_url = models.CharField(max_length=750, default="#")
+    imdb_url = models.CharField(max_length=500, default="#")
+    rotten_url = models.CharField(max_length=500, default="#")
+    meta_url = models.CharField(max_length=500, default="#")
 
     def __str__(self):
         return '{} - {}'.format(self.rank, self.title)
