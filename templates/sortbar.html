@@ -1,13 +1,12 @@
 
         <div class="container text-white mb-5 pt-1 pb-1 border border-dark rounded-lg  " style="background:rgba(138,0,0,1)" >
-
             <div class="row ">
-                <div class="col mt-2 " style="opacity:1;max-width: 77px">
-                    <p style="font-size: 13px">Sort by:</p>
+                <div class="col mt-2 " style="opacity:1;-ms-flex: 0 0 74px;flex: 0 0 74px;">
+                    <p style="font-size: small">Sort by:</p>
             </div>
 
 
-            <div class="col mt-1 " style="opacity: 1;max-width: 100px">
+            <div class="col mt-1 " style="opacity: 1;-ms-flex: 0 0 90px;flex: 0 0 90px;">
 
                     <div class="dropdown">
                   <button style="font-size: small" class="btn btn-secondary dropdown-toggle" type="button" id="sortbymenu" value="{% if button_disabled == 'Ranking' %}Ranking{%  endif %}{% if button_disabled == 'Release Date' %}Release Date{%  endif %}{% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,22 +23,24 @@
 
                 </div>
 
-                 <div class="col mt-1 " style="opacity: 1;max-width: 85px">
+                 <div class="col mt-1 float-xl-left" style="opacity: 1;-ms-flex: 0 0 80;flex: 0 0 80px;">
 
 
                     <button type="button" id="arrow_button" class="btn btn-success btn-sm " value="{% if arrow_pos == 'up' %}up{% else  %}down{%  endif %}">
-                        <span style="font-size: small;color: {% if arrow_pos == 'up' %}white{% else  %} #2f2f2f {%  endif %}">▲</span>
-                        <span style="font-size: small;color: {% if arrow_pos == 'down' %}white{% else  %} #2f2f2f  {%  endif %}">▼</span>
+                        <span style="font-size: small;color: {% if arrow_pos == 'up' %}white{% else  %} #2f2f2f {%  endif %}">↑</span>
+                        <span style="font-size: small;color: {% if arrow_pos == 'down' %}white{% else  %} #2f2f2f  {%  endif %}">↓</span>
                     </button>
 
                  </div>
+                    <div class="col" style="opacity:1;-ms-flex: 0 0 40px;flex: 0 0 40px;">
+
+                    </div>
 
 
-
-                     <div class="col mt-2 " style="opacity:1;max-width: 82px">
+                     <div class="col mt-2" style="opacity:1;-ms-flex: 0 0 82px;flex: 0 0 82px;">
                             <p style="font-size: small">Filter by:</p>
                     </div>
-                        <div class="col mt-1 " style="opacity: 1;max-width: 100px">
+                        <div class="col mt-1" style="opacity: 1;-ms-flex: 0 0 100px;flex: 0 0 100px;">
                             <button title="Filter content by your region" data-toggle="tooltip" type="button" id="avail_button" class="btn btn-danger {% if region_filter %}disabled{%  endif %}" value="avail" style="font-size: 13px">Availability</button>
                         </div>
 
