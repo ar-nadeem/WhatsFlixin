@@ -445,7 +445,7 @@ def imdbTopTvView(request):
             imdb_Top_Tv = imdbTopTv.objects.all().order_by('rank')
             wanted_items = set()
             not_wanted_items = set()
-            for models in imdbTopTv:
+            for models in imdb_Top_Tv:
                 if models.country.find(country) >= 0:
                     wanted_items.add(models.pk)
                 else:
