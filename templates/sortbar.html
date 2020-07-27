@@ -1,5 +1,5 @@
 
-        <div class="container text-white mb-3  border border-dark rounded-lg sticky" style="background:rgb(117,0,0);" >
+        <div class="container text-white mb-3  border border-dark rounded-lg" id="menubar" style="background:rgb(117,0,0);" >
             <div class="row">
 
             <div class="d-inline-flex">
@@ -36,6 +36,7 @@
 
                     <div class="dropdown">
                   <button style="font-size: small" class="btn btn-secondary dropdown-toggle" type="button" id="sortbymenu" value="{% if button_disabled == 'Ranking' %}Ranking{%  endif %}{% if button_disabled == 'Release Date' %}Release Date{%  endif %}{% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
                     {% if button_disabled == 'Ranking' %}Ranking{%  endif %}
                     {% if button_disabled == 'Release Date' %}Release Date{%  endif %}
                     {% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}
