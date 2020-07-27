@@ -1,7 +1,11 @@
     <!-- Navbar -->
 
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background: rgb(135,3,3);">
-            <a class="navbar-brand" href="/popular-movie">WhatsFlixin</a>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: rgb(135,3,3);">
+            <a class="navbar-brand" href="/movie">WhatsFlixin
+
+                {% if nbar == 'popm' or nbar == 'topm' %}<span style="color: #b8b8b8"> - Movies</span>{%  endif %}
+                {% if nbar == 'toptv' or nbar == 'poptv' %}<span style="color: #b8b8b8"> - TV</span>{%  endif %}
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -22,33 +26,13 @@
                 <ul class="navbar-nav mr-auto">
 
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {% if nbar == 'movie' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Movies
-                    </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <a class="dropdown-item" href="/popular-movie">Popular</a>
-                          <a class="dropdown-item" href="/top-rated-movie">Top Rated</a>
-                        </div>
+                        <a class="nav-link" href="/movie">Movies<span class="sr-only">(current)</span></a>
                   </li>
                 </ul>
 
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {% if nbar == 'tv' %}active{% endif %}" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      TV
-                    </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <a class="dropdown-item" href="/popular-tv">Popular</a>
-                          <a class="dropdown-item" href="/top-rated-tv">Top Rated</a>
-                        </div>
-                  </li>
-                    <!--
-                    <li class="nav-item">
-                          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
-                    -->
+                     <a class="nav-link" href="/tv">TV<span class="sr-only">(current)</span></a>
                 </ul>
                 </div>
             </div>

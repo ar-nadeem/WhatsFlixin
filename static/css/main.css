@@ -78,3 +78,9 @@ body {
 .my-float{
 	margin-top:22px;
 }
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 99;
+    top: 56px;
+}

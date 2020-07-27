@@ -1,6 +1,30 @@
 
-        <div class="container text-white mb-5 pt-1 pb-1 border border-dark rounded-lg  " style="background:rgb(117,0,0)" >
-            <div class="row ">
+        <div class="container text-white mb-3  border border-dark rounded-lg sticky" style="background:rgb(117,0,0);" >
+            <div class="row">
+
+            <div class="d-inline-flex">
+
+                <div class="col mt-2 ml-1" style="opacity:1;-ms-flex: 0 0 74px;flex: 0 0 74px;">
+                    <p style="font-size: small">List by:</p>
+            </div>
+
+
+            <div class="flex-column mt-1 " >
+
+                    <div class="dropdown">
+                  <button style="font-size: small" class="btn btn-secondary dropdown-toggle" type="button" id="listbymenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if nbar == 'popm' or nbar == 'poptv' %}IMDB Popularity{%  endif %}
+                    {% if nbar == 'topm' or nbar == 'toptv' %}IMDB Top-Rated{%  endif %}
+                  </button>
+                    <div class="dropdown-menu" id="listby">
+                        <a class="dropdown-item {% if nbar == 'popm' or nbar == 'poptv' %}disabled{%  endif %}" href="../popular#pagetitle">IMDB Popularity</a>
+                        <a class="dropdown-item {% if nbar == 'topm' or nbar == 'toptv' %}disabled{%  endif %}" href="../top-rated#pagetitle">IMDB Top-Rated</a>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+
             <div class="d-inline-flex">
 
                 <div class="col mt-2 " style="opacity:1;-ms-flex: 0 0 74px;flex: 0 0 74px;">
@@ -18,7 +42,7 @@
                   </button>
                     <div class="dropdown-menu" id="sortby">
                         <a class="dropdown-item {% if button_disabled == 'Ranking' %}disabled{%  endif %}" href="#">Ranking</a>
-                        <a class="dropdown-item" {% if button_disabled == 'IMDB Rating' %}disabled{%  endif %} href="#">IMDB Rating</a>
+                        <a class="dropdown-item {% if button_disabled == 'IMDB Rating' %}disabled{%  endif %}" href="#">IMDB Rating</a>
                         <a class="dropdown-item {% if button_disabled == 'Release Date' %}disabled{%  endif %}" href="#">Release Date</a>
                     </div>
                     </div>

@@ -2,15 +2,16 @@
     {% block content %}
         <title>WhatsFlixin - TopRated Movies</title>
         {% load static %}
+        {% include "sortbar.html" %}
             <div class="container  text-white mb-2  rounded-lg  " style="background:transparent;border-width:3px !important" >
 
-            <div class="row" style="background-color: rgba(10, 0, 0, 0.5);justify-content:center;" >
+            <div class="row" id="pagetitle" style="background-color: rgba(10, 0, 0, 0.5);justify-content:center;" >
 
                 <h1>IMDB Top-Rated Movies</h1>
                 </div>
 
             </div>
-        {% include "sortbar.html" %}
+
 
         {% for movie in imdb_Top_Movies %}
                 <!-- Main Grid to Display Movies-->
