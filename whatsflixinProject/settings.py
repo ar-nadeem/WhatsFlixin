@@ -15,7 +15,7 @@ import django_heroku
 ###################### FOR HEROKU NEEDS TO BE TURNED ON ##################################
 SECURE_SSL_REDIRECT = True
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -144,7 +144,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
-
+# GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
+GEOIP_PATH=os.environ['GEOIP_GEOLITE2_PATH']
+GEOIP_CITY=os.environ['GEOIP_GEOLITE2_CITY_FILENAME']
+GEOIP_COUNTRY=os.environ['GEOIP_GEOLITE2_COUNTRY_FILENAME']
 
 django_heroku.settings(locals())
