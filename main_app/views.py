@@ -80,24 +80,17 @@ def imdbPopMovieView(request):
                 imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('-imdb_rating')
 
         if region_filter:
-            ip = request.META.get('REMOTE_ADDR', None)
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[-1].strip()
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+
             if ip == "127.0.0.1":
                 ip = "72.255.7.40"
-            try:
-                country = GeoIP2().city(ip)['country_name']
-            except:
-                ip = request.META.get('REMOTE_ADDR', None)
-                stuff_for_frontend = {
-                    'imdb_Pop_Movies': imdb_Pop_Movie_DB,
-                    'nbar': 'popm',
-                    'arrow_pos': arrow,
-                    'button_disabled': button_pressed,
-                    'country': country,
-                    'region_filter': region_filter,
-                    "ip": ip,
 
-                }
-                return render(request, 'popmovies.html', stuff_for_frontend)
+            country = GeoIP2().city(ip)['country_name']
+
 
             if country == "Pakistan":
                 country = "India"
@@ -218,9 +211,15 @@ def imdbTopMovieView(request):
                 imdb_Top_Movies = imdbTopMovie.objects.all().order_by('-imdb_rating')
 
         if region_filter:
-            ip = request.META.get('REMOTE_ADDR', None)
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[-1].strip()
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+
             if ip == "127.0.0.1":
                 ip = "72.255.7.40"
+
             country = GeoIP2().city(ip)['country_name']
 
             if country == "Pakistan":
@@ -342,7 +341,12 @@ def imdbPopTvView(request):
                 imdb_Pop_Tv = imdbPopTv.objects.all().order_by('-imdb_rating')
 
         if region_filter:
-            ip = request.META.get('REMOTE_ADDR', None)
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[-1].strip()
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+
             if ip == "127.0.0.1":
                 ip = "72.255.7.40"
             country = GeoIP2().city(ip)['country_name']
@@ -466,7 +470,12 @@ def imdbTopTvView(request):
                 imdb_Top_Tv = imdbTopTv.objects.all().order_by('-imdb_rating')
 
         if region_filter:
-            ip = request.META.get('REMOTE_ADDR', None)
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[-1].strip()
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+
             if ip == "127.0.0.1":
                 ip = "72.255.7.40"
             country = GeoIP2().city(ip)['country_name']
