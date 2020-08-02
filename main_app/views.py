@@ -5,6 +5,7 @@ from django.contrib.gis.geoip2 import GeoIP2
 # Create your views here.
 
 def imdbPopMovieView(request):
+    ip = ""
     arrow ="up"
     button_pressed = "List Rank"
     last_pressed = "List Rank"
@@ -82,7 +83,21 @@ def imdbPopMovieView(request):
             ip = request.META.get('REMOTE_ADDR', None)
             if ip == "127.0.0.1":
                 ip = "72.255.7.40"
-            country = GeoIP2().city(ip)['country_name']
+            try:
+                country = GeoIP2().city(ip)['country_name']
+            except:
+                ip = request.META.get('REMOTE_ADDR', None)
+                stuff_for_frontend = {
+                    'imdb_Pop_Movies': imdb_Pop_Movie_DB,
+                    'nbar': 'popm',
+                    'arrow_pos': arrow,
+                    'button_disabled': button_pressed,
+                    'country': country,
+                    'region_filter': region_filter,
+                    "ip": ip,
+
+                }
+                return render(request, 'popmovies.html', stuff_for_frontend)
 
             if country == "Pakistan":
                 country = "India"
@@ -123,6 +138,7 @@ def imdbPopMovieView(request):
         'button_disabled': button_pressed,
         'country': country,
         'region_filter': region_filter,
+        "ip": ip,
 
     }
 
@@ -369,6 +385,7 @@ def imdbPopTvView(request):
         'button_disabled': button_pressed,
         'country': country,
         'region_filter': region_filter,
+
 
     }
 

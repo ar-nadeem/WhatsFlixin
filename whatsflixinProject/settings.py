@@ -144,9 +144,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
-GEOIP_PATH=os.environ['GEOIP_GEOLITE2_PATH']
-GEOIP_CITY=os.environ['GEOIP_GEOLITE2_CITY_FILENAME']
-GEOIP_COUNTRY=os.environ['GEOIP_GEOLITE2_COUNTRY_FILENAME']
+GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
+
 
 django_heroku.settings(locals())
