@@ -15,7 +15,7 @@ import django_heroku
 ###################### FOR HEROKU NEEDS TO BE TURNED ON ##################################
 SECURE_SSL_REDIRECT = True
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
