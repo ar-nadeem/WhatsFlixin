@@ -60,14 +60,14 @@ $(document).ready(function() {
     <link rel="icon" href="{% static "images/icon.png" %}">
 
 
-
 </head>
 
 
 
 
-
-<button onclick="topFunction()" id="myBtn" title="Go to top">↑</button><script>
+<body>
+<button onclick="topFunction()" id="myBtn" title="Go to top">↑</button>
+<script>
 //Get the button:
 mybutton = document.getElementById("myBtn");
 
@@ -96,7 +96,7 @@ function topFunction() {
     {% include "navbar.html" %}
 
     <!-- Opening Jumbotron for website-->
-    <div class="jumbotron text-white" style="width: 75%; margin-left: auto; margin-right: auto; background: rgba(33,2,2,0.9);">
+    <div class="jumbotron text-white" id="jumbo" style="width: 75%; margin-left: auto; margin-right: auto; background: rgba(33,2,2,0.9);">
         <img src="{% static "images/logo.png" %}" alt="WhatsFlixin" class="img-fluid w-25">
 
 
@@ -107,12 +107,12 @@ function topFunction() {
         This website is under low maintenance<br>
         Email me for bugs & features: info@whatsflixin.com 😊</p>
         <br>
-        <p>Top rated and Most popular movies from IMDB that are available on Netflix to watch.<br>
+        <p id="menubar">Top rated and Most popular movies from IMDB that are available on Netflix to watch.<br>
 
-                     <!-- Patreon Button -->
-        Please donate to keep this project alive</p>
-
-        <a href="https://www.patreon.com/bePatron?u=17685881" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+{#                     <!-- Patreon Button -->#}
+{#        Please donate to keep this project alive</p>#}
+{##}
+{#        <a href="https://www.patreon.com/bePatron?u=17685881" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>#}
 
     </div>
 

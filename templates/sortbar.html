@@ -1,6 +1,6 @@
 
-        <div class="container text-white mb-3  border border-dark rounded-lg" id="menubar" style="background:rgb(117,0,0);" >
-            <div class="row">
+<div class="container text-white mb-3  border border-dark rounded-lg"  style="background:rgb(117,0,0);" >
+            <div class="row" >
 
             <div class="d-inline-flex">
 
@@ -17,8 +17,8 @@
                     {% if nbar == 'topm' or nbar == 'toptv' %}IMDB Top-Rated{%  endif %}
                   </button>
                     <div class="dropdown-menu" id="listby">
-                        <a class="dropdown-item {% if nbar == 'popm' or nbar == 'poptv' %}disabled{%  endif %}" href="../popular#pagetitle">IMDB Popularity</a>
-                        <a class="dropdown-item {% if nbar == 'topm' or nbar == 'toptv' %}disabled{%  endif %}" href="../top-rated#pagetitle">IMDB Top-Rated</a>
+                        <a class="dropdown-item {% if nbar == 'popm' or nbar == 'poptv' %}disabled{%  endif %}" href="../popular#menubar">IMDB Popularity</a>
+                        <a class="dropdown-item {% if nbar == 'topm' or nbar == 'toptv' %}disabled{%  endif %}" href="../top-rated#menubar">IMDB Top-Rated</a>
                     </div>
                     </div>
 
@@ -35,14 +35,14 @@
             <div class="flex-column mt-1 " >
 
                     <div class="dropdown">
-                  <button style="font-size: small" class="btn btn-secondary dropdown-toggle" type="button" id="sortbymenu" value="{% if button_disabled == 'Ranking' %}Ranking{%  endif %}{% if button_disabled == 'Release Date' %}Release Date{%  endif %}{% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button style="font-size: small" class="btn btn-secondary dropdown-toggle" type="button" id="sortbymenu" value="{% if button_disabled == 'List Rank' %}List Rank{%  endif %}{% if button_disabled == 'Release Date' %}Release Date{%  endif %}{% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                    {% if button_disabled == 'Ranking' %}Ranking{%  endif %}
+                    {% if button_disabled == 'List Rank' %}List Rank{%  endif %}
                     {% if button_disabled == 'Release Date' %}Release Date{%  endif %}
                     {% if button_disabled == 'IMDB Rating' %}IMDB Rating{%  endif %}
                   </button>
                     <div class="dropdown-menu" id="sortby">
-                        <a class="dropdown-item {% if button_disabled == 'Ranking' %}disabled{%  endif %}" href="#">Ranking</a>
+                        <a class="dropdown-item {% if button_disabled == 'List Rank' %}disabled{%  endif %}" href="#">List Rank</a>
                         <a class="dropdown-item {% if button_disabled == 'IMDB Rating' %}disabled{%  endif %}" href="#">IMDB Rating</a>
                         <a class="dropdown-item {% if button_disabled == 'Release Date' %}disabled{%  endif %}" href="#">Release Date</a>
                     </div>
@@ -149,30 +149,23 @@
 
     });
 
-            $("#avail_button").on("click", function (e) {
+
+    $("#avail_button").on("click", function (e) {
         loading_on()
         e.preventDefault();
-        $.getJSON('https://api.ipify.org?format=jsonp&callback=?', function (data) {
-
-            console.log(JSON.stringify(data, null, 2).ip);
-            var ip = jQuery.parseJSON(JSON.stringify(data, null, 2))
-            var ip = ip.ip
-            console.log(ip)
 
 
-            $.getJSON("https://cors-anywhere.herokuapp.com/http://www.geoplugin.net/json.gp?ip=" + ip, function (response) {
-                console.log(response.geoplugin_countryName);
+
+
                 $.ajax({
                     type: 'POST',
                     data: {
                         button_post: $("#avail_button").val(),
                         last_pressed: $("#sortbymenu").val(),
-
                         avail: $("#avail_button").attr("class"),
 
 
 
-                        country: response.geoplugin_countryName,
                         csrfmiddlewaretoken: "{{ csrf_token }}",
 
                         action: 'post'
@@ -181,51 +174,13 @@
                         loading_off();
 
                         $("body").html(data);
-
                         $('.dropdown-toggle').dropdown();
 
 
                     },
                 });
-            });
+                        return false;
         });
-        return false;
-
-    });
-    {#$("#rank_button").on("click", function (e) {#}
-    {#    loading_on()#}
-    {#    e.preventDefault();#}
-    {##}
-    {#    $.ajax({#}
-    {#        type: 'POST',#}
-    {#        data: {#}
-    {#            button_post: $("#rank_button").val(),#}
-    {##}
-    {#            arrow: $("#arrow_button").val(),#}
-    {#            reldate: $("#reldate_button").attr("class"),#}
-    {#            avail: $("#avail_button").attr("class"),#}
-    {#            rank: $("#rank_button").attr("class"),#}
-    {#            csrfmiddlewaretoken: "{{ csrf_token }}",#}
-    {##}
-    {#            action: 'post'#}
-    {#        },#}
-    {#        success: function (data) {#}
-    {#            loading_off()#}
-    {#            $("body").html(data);#}
-    {#            $('.dropdown-toggle').dropdown();#}
-    {##}
-    {##}
-    {#        },#}
-    {#    });#}
-    {#    return false;#}
-    {##}
-    {##}
-    {#});#}
-
-
-
-
-
 
 
 

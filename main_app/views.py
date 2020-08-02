@@ -1,19 +1,19 @@
 from django.shortcuts import render
 from .models import imdbPopMovie, imdbTopMovie, imdbPopTv, imdbTopTv
-
+from django.contrib.gis.geoip2 import GeoIP2
 
 # Create your views here.
 
 def imdbPopMovieView(request):
     arrow ="up"
-    button_pressed = "Ranking"
-    last_pressed = "Ranking"
+    button_pressed = "List Rank"
+    last_pressed = "List Rank"
     only_arrow_post = False
     country = "N/A"
     region_filter = False
     double_pressed = False
 
-    if button_pressed == "Ranking":
+    if button_pressed == "List Rank":
         imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('rank')
 
     if request.POST.get('action') == 'post':
@@ -66,7 +66,7 @@ def imdbPopMovieView(request):
             else:
                 imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('-release_date')
 
-        if button_pressed == "Ranking":
+        if button_pressed == "List Rank":
             if arrow == "up":
                 imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('rank')
             else:
@@ -79,7 +79,11 @@ def imdbPopMovieView(request):
                 imdb_Pop_Movie_DB = imdbPopMovie.objects.all().order_by('-imdb_rating')
 
         if region_filter:
-            country = request.POST['country']
+            ip = request.META.get('REMOTE_ADDR', None)
+            if ip == "127.0.0.1":
+                ip = "72.255.7.40"
+            country = GeoIP2().city(ip)['country_name']
+
             if country == "Pakistan":
                 country = "India"
 
@@ -99,7 +103,7 @@ def imdbPopMovieView(request):
                 else:
                     imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=wanted_items).order_by('-release_date')
 
-            if button_pressed == "Ranking":
+            if button_pressed == "List Rank":
                 if arrow == "up":
                     imdb_Pop_Movie_DB = imdbPopMovie.objects.filter(pk__in=wanted_items).order_by('rank')
                 else:
@@ -128,14 +132,14 @@ def imdbPopMovieView(request):
 
 def imdbTopMovieView(request):
     arrow = "up"
-    button_pressed = "Ranking"
-    last_pressed = "Ranking"
+    button_pressed = "List Rank"
+    last_pressed = "List Rank"
     only_arrow_post = False
     country = "N/A"
     region_filter = False
     double_pressed = False
 
-    if button_pressed == "Ranking":
+    if button_pressed == "List Rank":
         imdb_Top_Movies = imdbTopMovie.objects.all().order_by('rank')
 
     if request.POST.get('action') == 'post':
@@ -185,7 +189,7 @@ def imdbTopMovieView(request):
             else:
                 imdb_Top_Movies = imdbTopMovie.objects.all().order_by('-release_date')
 
-        if button_pressed == "Ranking":
+        if button_pressed == "List Rank":
             if arrow == "up":
                 imdb_Top_Movies = imdbTopMovie.objects.all().order_by('rank')
             else:
@@ -198,7 +202,11 @@ def imdbTopMovieView(request):
                 imdb_Top_Movies = imdbTopMovie.objects.all().order_by('-imdb_rating')
 
         if region_filter:
-            country = request.POST['country']
+            ip = request.META.get('REMOTE_ADDR', None)
+            if ip == "127.0.0.1":
+                ip = "72.255.7.40"
+            country = GeoIP2().city(ip)['country_name']
+
             if country == "Pakistan":
                 country = "India"
 
@@ -218,7 +226,7 @@ def imdbTopMovieView(request):
                 else:
                     imdb_Top_Movies = imdbTopMovie.objects.filter(pk__in=wanted_items).order_by('-release_date')
 
-            if button_pressed == "Ranking":
+            if button_pressed == "List Rank":
                 if arrow == "up":
                     imdb_Top_Movies = imdbTopMovie.objects.filter(pk__in=wanted_items).order_by('rank')
                 else:
@@ -248,14 +256,14 @@ def imdbTopMovieView(request):
 
 def imdbPopTvView(request):
     arrow = "up"
-    button_pressed = "Ranking"
-    last_pressed = "Ranking"
+    button_pressed = "List Rank"
+    last_pressed = "List Rank"
     only_arrow_post = False
     country = "N/A"
     region_filter = False
     double_pressed = False
 
-    if button_pressed == "Ranking":
+    if button_pressed == "List Rank":
         imdb_Pop_Tv = imdbPopTv.objects.all().order_by('rank')
 
     if request.POST.get('action') == 'post':
@@ -305,7 +313,7 @@ def imdbPopTvView(request):
             else:
                 imdb_Pop_Tv = imdbPopTv.objects.all().order_by('-release_date')
 
-        if button_pressed == "Ranking":
+        if button_pressed == "List Rank":
             if arrow == "up":
                 imdb_Pop_Tv = imdbPopTv.objects.all().order_by('rank')
             else:
@@ -318,7 +326,11 @@ def imdbPopTvView(request):
                 imdb_Pop_Tv = imdbPopTv.objects.all().order_by('-imdb_rating')
 
         if region_filter:
-            country = request.POST['country']
+            ip = request.META.get('REMOTE_ADDR', None)
+            if ip == "127.0.0.1":
+                ip = "72.255.7.40"
+            country = GeoIP2().city(ip)['country_name']
+
             if country == "Pakistan":
                 country = "India"
 
@@ -338,7 +350,7 @@ def imdbPopTvView(request):
                 else:
                     imdb_Pop_Tv = imdbPopTv.objects.filter(pk__in=wanted_items).order_by('-release_date')
 
-            if button_pressed == "Ranking":
+            if button_pressed == "List Rank":
                 if arrow == "up":
                     imdb_Pop_Tv = imdbPopTv.objects.filter(pk__in=wanted_items).order_by('rank')
                 else:
@@ -367,14 +379,14 @@ def imdbPopTvView(request):
 
 def imdbTopTvView(request):
     arrow = "up"
-    button_pressed = "Ranking"
-    last_pressed = "Ranking"
+    button_pressed = "List Rank"
+    last_pressed = "List Rank"
     only_arrow_post = False
     country = "N/A"
     region_filter = False
     double_pressed = False
 
-    if button_pressed == "Ranking":
+    if button_pressed == "List Rank":
         imdb_Top_Tv = imdbTopTv.objects.all().order_by('rank')
 
     if request.POST.get('action') == 'post':
@@ -424,7 +436,7 @@ def imdbTopTvView(request):
             else:
                 imdb_Top_Tv = imdbTopTv.objects.all().order_by('-release_date')
 
-        if button_pressed == "Ranking":
+        if button_pressed == "List Rank":
             if arrow == "up":
                 imdb_Top_Tv = imdbTopTv.objects.all().order_by('rank')
             else:
@@ -437,7 +449,11 @@ def imdbTopTvView(request):
                 imdb_Top_Tv = imdbTopTv.objects.all().order_by('-imdb_rating')
 
         if region_filter:
-            country = request.POST['country']
+            ip = request.META.get('REMOTE_ADDR', None)
+            if ip == "127.0.0.1":
+                ip = "72.255.7.40"
+            country = GeoIP2().city(ip)['country_name']
+
             if country == "Pakistan":
                 country = "India"
 
@@ -457,7 +473,7 @@ def imdbTopTvView(request):
                 else:
                     imdb_Top_Tv = imdbTopTv.objects.filter(pk__in=wanted_items).order_by('-release_date')
 
-            if button_pressed == "Ranking":
+            if button_pressed == "List Rank":
                 if arrow == "up":
                     imdb_Top_Tv = imdbTopTv.objects.filter(pk__in=wanted_items).order_by('rank')
                 else:
