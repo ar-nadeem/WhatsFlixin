@@ -11,10 +11,10 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 
 # Pesonal Debuging Key
-# ombdAPI="1d54010c"
+ombdAPI="1d54010c"
 
 #Official WhatsFlixin Key
-ombdAPI="c8d38112"
+# ombdAPI="c8d38112"
 
 
 rotten_rate=[]
@@ -65,8 +65,8 @@ driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome
 # driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
 
 
-timeout = 60
-wait = WebDriverWait(driver, 60)
+timeout = 360
+wait = WebDriverWait(driver, 360)
 
 
 def check_on_netflix(title):
