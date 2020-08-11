@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import django_heroku
 ###################### FOR HEROKU NEEDS TO BE TURNED ON ##################################
-SECURE_SSL_REDIRECT = True
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
