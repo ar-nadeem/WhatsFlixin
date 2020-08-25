@@ -1,8 +1,13 @@
 from django.urls import path
 from . import views
 from django.views.generic import RedirectView
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
+    path('ads.txt', views.AdsView, name='AdsView'),
+
     path('', RedirectView.as_view(url='movie/popular/')),
     path('popular-movie', RedirectView.as_view(url='movie/popular/')),
 
@@ -18,4 +23,4 @@ urlpatterns = [
 
 
 
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

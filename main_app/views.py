@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from .models import imdbPopMovie, imdbTopMovie, imdbPopTv, imdbTopTv
 from django.contrib.gis.geoip2 import GeoIP2
+from django.http import HttpResponse
 
 # Create your views here.
+def AdsView(request):
+    line = "google.com, pub-7803878263219083, DIRECT, f08c47fec0942fa0"
+    return HttpResponse(line)
+
 
 def imdbPopMovieView(request):
     ip = ""
