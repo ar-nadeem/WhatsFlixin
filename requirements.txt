@@ -1,6 +1,6 @@
 aiohttp==3.6.2
 amqp==1.4.9
-anyjson==0.3.3
+anyjson
 appdirs==1.4.4
 asgiref==3.2.10
 async-timeout==3.0.1
