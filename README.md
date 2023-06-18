@@ -1,2 +1,4 @@
 # WhatsFlixin
-IMDB for Netflix
+IMDB for Netflix.
+
+My child, who failed in the miserable world.
